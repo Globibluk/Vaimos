@@ -1,12 +1,12 @@
 package sim;
 
-import java.util.ArrayList;
-
 public class World {
 
 	private Cell[][] grid;
 	private static int worldHeight;
 	private static int worldLength;
+	
+	private static Boat boat;
 	
 	public World(int height, int length)
 	{
@@ -32,6 +32,11 @@ public class World {
 		return grid;
 	}
 	
+	public Cell getCellXY(int x, int y)
+	{
+		return grid[x][y];
+	}
+	
 	public int getWorldHeight()
 	{
 		return worldHeight;
@@ -40,6 +45,16 @@ public class World {
 	public int getWorldLength()
 	{
 		return worldLength;
+	}
+	
+	public void setBoat(Boat boat)
+	{
+		this.boat = boat;     										// Warnning ? 
+	}
+	
+	public Boat getBoat()
+	{
+		return boat;
 	}
 	
 }
