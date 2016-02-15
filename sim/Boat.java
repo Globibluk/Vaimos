@@ -47,5 +47,6 @@ public class Boat {
 				"Vent : " + c.getVent().getX() + "\t" + c.getVent().getY() + "\n" +
 				"Courant : " + c.getCourant().getX() + "\t" + c.getCourant().getY() + "\n" +
 				"Salinite : " + c.getSalinite() + "\n";
+				
 	}
 }
