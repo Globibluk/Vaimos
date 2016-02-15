@@ -9,6 +9,7 @@ public class Cell {
 	private float profondeur;
 	private static float profondeurMax = 10;
 	private boolean decouvert;
+	private float salinite;											// Donnee en plus
 	
 	public Cell(Vector2D vent, Vector2D courant, float profondeur)
 	{
@@ -16,6 +17,7 @@ public class Cell {
 		this.courant = courant;
 		this.profondeur = profondeur;
 		decouvert = false;
+		salinite =(float) Math.random();
 	}
 	
 	public Cell()
@@ -24,6 +26,7 @@ public class Cell {
 		courant = new Vector2D();
 		profondeur = (float) Math.random() * profondeurMax;
 		decouvert = false;
+		salinite =(float) Math.random();
 	}
 	
 	public Vector2D getVent()
@@ -44,5 +47,17 @@ public class Cell {
 	public boolean getDecouvert()
 	{
 		return decouvert;
+	}
+
+	public float getSalinite() {
+		return salinite;
+	}
+
+	public void setSalinite(float salinite) {
+		this.salinite = salinite;
+	}
+
+	public void setDecouvert() {
+		this.decouvert = true;
 	}
 }
