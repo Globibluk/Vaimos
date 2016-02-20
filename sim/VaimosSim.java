@@ -4,36 +4,40 @@ public class VaimosSim {
 
 	public static void main(String[] args)
 	{
-		World world = new World(50, 50);
+		World world = new World(75, 75);
 		Boat boat = new Boat(10, 10, world);
 		Display display = new Display(world);
-		int i = 0;
-		int newposX;
-		int newposY;
-		while(i<100) 										// 100 iteration pour le moment
+		//AffichageVecteur affvec = new AffichageVecteur(world);
+		int delai = 200;
+		float newposX;
+		float newposY;
+		int heure = 0;
+		int jour = 1;
+		while(true) 										// 100 iteration pour le moment
 		{
+			System.out.println("\tJour : " + jour + "\tHeure : " + heure + "");
 			display.repaint();
+			//affvec.repaint();
 			boat.analyseCell();
-			newposX = boat.getPosX() + (int)world.getGrid()[boat.getPosX()][boat.getPosY()].getVent().getX(); // Calcul rapide d'une nouvelle position XY
-			newposY = boat.getPosY() + (int)world.getGrid()[boat.getPosX()][boat.getPosY()].getVent().getY();
-			if(newposX < 0)
-			{
-				newposX = 0;
-			}
-			if(newposX > world.getWorldHeight())   			// Changement de position du bateau et evitement d'erreur de seg
-			{
-				newposX = world.getWorldHeight();
-			}
-			if(newposY < 0)
-			{
-				newposY = 0;
-			}
-			if(newposY > world.getWorldLength())
-			{
-				newposY = world.getWorldLength();
-			}												
+			newposX = boat.getFPosX() + world.getGrid()[boat.getIPosX()][boat.getIPosY()].getVent().getX(); // Calcul rapide d'une nouvelle position XY
+			newposY = boat.getFPosY() + world.getGrid()[boat.getIPosX()][boat.getIPosY()].getVent().getY();
+										
 			boat.move(newposX, newposY);					// Jusqu'ici
-			i++;
+			
+			heure++;
+			
+			if(heure == 24)
+			{
+				world.changementVent();
+				heure = 0;
+				jour++;
+			}
+			
+			try {
+				Thread.sleep(delai);
+			} catch (InterruptedException e) {
+			}
+			
 		}
 	}	
 }
