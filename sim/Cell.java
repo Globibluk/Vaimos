@@ -34,6 +34,11 @@ public class Cell {
 		return vent;
 	}
 	
+	public void setVent()
+	{
+		vent = new Vector2D();
+	}
+	
 	public Vector2D getCourant()
 	{
 		return courant;
