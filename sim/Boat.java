@@ -55,6 +55,13 @@ public class Boat {
 		return fPosY;
 	}
 	
+	public Cell getGridXY(int i, int j)
+	{
+		if(grid[i][j] != null) return grid[i][j];
+		return null;
+		
+	}
+	
 	public void analyseCell()
 	{
 		grid[iPosX][iPosY] = world.getCellXY(iPosX, iPosY);
@@ -70,5 +77,9 @@ public class Boat {
 				"Courant : " + c.getCourant().getX() + "\t" + c.getCourant().getY() + "\n" +
 				"Salinite : " + c.getSalinite() + "\n";
 				
+	}
+
+	public World getWorld() {
+		return world;
 	}
 }

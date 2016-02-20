@@ -13,7 +13,6 @@ public class AffichageVecteur extends JPanel{
 
 	private static final long serialVersionUID = 1L;
 
-	private World world;
 	private int height;
 	private int length;
 	
@@ -24,7 +23,6 @@ public class AffichageVecteur extends JPanel{
 	
 	public AffichageVecteur(World world) 
 	{	
-		this.world = world;
 		height = world.getWorldHeight();
 		length = world.getWorldLength();
 		
@@ -56,7 +54,7 @@ public class AffichageVecteur extends JPanel{
 		{
 			for(int j=0;j<length;j++)
 			{
-				//g2.rotate(Math.toRadians(50), 100, 100);
+				g2.rotate(Math.toRadians(50));
 				g2.drawImage(Spritevecteur, spriteLength * i, spriteLength * j,
 						spriteLength, spriteLength, frame);
 			}

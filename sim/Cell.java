@@ -7,7 +7,7 @@ public class Cell {
 	private Vector2D vent;
 	private Vector2D courant;
 	private float profondeur;
-	private static float profondeurMax = 10;
+	private static float profondeurMax = 1000;
 	private boolean decouvert;
 	private float salinite;											// Donnee en plus
 	
@@ -25,6 +25,7 @@ public class Cell {
 		vent = new Vector2D();
 		courant = new Vector2D();
 		profondeur = (float) Math.random() * profondeurMax;
+		//profondeur = 900;
 		decouvert = false;
 		salinite =(float) Math.random();
 	}

@@ -4,19 +4,21 @@ public class VaimosSim {
 
 	public static void main(String[] args)
 	{
-		World world = new World(75, 75);
+		World world = new World(50, 50);
 		Boat boat = new Boat(10, 10, world);
 		Display display = new Display(world);
 		//AffichageVecteur affvec = new AffichageVecteur(world);
-		int delai = 200;
+		int delai = 0;
 		float newposX;
 		float newposY;
 		int heure = 0;
 		int jour = 1;
+		AffichageProfondeur bol = new AffichageProfondeur(boat);
 		while(true) 										// 100 iteration pour le moment
 		{
 			System.out.println("\tJour : " + jour + "\tHeure : " + heure + "");
 			display.repaint();
+			bol.repaint();
 			//affvec.repaint();
 			boat.analyseCell();
 			newposX = boat.getFPosX() + world.getGrid()[boat.getIPosX()][boat.getIPosY()].getVent().getX(); // Calcul rapide d'une nouvelle position XY
