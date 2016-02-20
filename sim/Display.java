@@ -11,6 +11,8 @@ import javax.swing.JPanel;
 
 public class Display extends JPanel{
 
+	private static final long serialVersionUID = 1L;
+
 	private World world;
 	private int height;
 	private int length;
@@ -19,7 +21,10 @@ public class Display extends JPanel{
 	
 	private Image spriteRaw;
 	private Image spriteScan;
+	private Image spriteBoat;
 	private int spriteLength = 16;
+	
+	private Boat boat;
 	
 	public Display(World world) 
 	{	
@@ -33,8 +38,8 @@ public class Display extends JPanel{
 	    frame.add(this);
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 	    frame.setVisible(true);
-	    
-	    loadSprites();
+	    boat = world.getBoat();
+	    loadSprites();	    
 	}
 	
 	public void loadSprites()
@@ -53,6 +58,13 @@ public class Display extends JPanel{
 		} catch (Exception e)
 		{
 			System.out.println("Sprite non loaded :" + "water_scan");
+		}
+		try
+		{
+			spriteBoat = ImageIO.read(new File("./src/ressources/boat.png"));
+		} catch (Exception e)
+		{
+			System.out.println("Sprite non loaded :" + "boat");
 		}
 	}
 	
@@ -76,6 +88,7 @@ public class Display extends JPanel{
 				}
 			}
 		}
+		g2.drawImage(spriteBoat, (int) (spriteLength * boat.getFPosX()), (int) (spriteLength * boat.getFPosY()), spriteLength + 16, spriteLength + 16, frame);
 		
 	}
 	
