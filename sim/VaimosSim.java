@@ -4,11 +4,11 @@ public class VaimosSim {
 
 	public static void main(String[] args)
 	{
-		World world = new World(50, 50);
+		World world = new World(60, 66);
 		Boat boat = new Boat(10, 10, world);
 		Display display = new Display(world);
 		//AffichageVecteur affvec = new AffichageVecteur(world);
-		int delai = 0;
+		int delai = 00;
 		float newposX;
 		float newposY;
 		int heure = 0;

@@ -1,5 +1,7 @@
 package sim;
 
+import tools.Vector2D;
+
 public class World {
 
 	private Cell[][] grid;
@@ -18,11 +20,50 @@ public class World {
 	
 	public void populateGrid(int height, int length)
 	{
+		
+		float prof = 0;
+		float vari;
+		float moyprof;
 		for(int i=0;i<height;i++)
 		{
 			for(int j=0;j<length;j++)
 			{
-				grid[i][j] = new Cell();
+				if( i == 0 && j == 0)
+				{
+					grid[i][j] = new Cell();
+				}
+				else
+				{
+					vari = (float) (Math.random() * 20) - 10;
+					if(i == 0)
+					{
+						moyprof = grid[i][j-1].getProfondeur();
+						vari = (moyprof * vari)/100;
+						prof = moyprof + vari;
+					}
+					if(j == 0)
+					{
+						moyprof = (grid[i-1][j].getProfondeur() + grid[i-1][j+1].getProfondeur())/2;
+						vari = (moyprof * vari)/100;
+						prof = moyprof + vari;
+					}
+					if(j != 0 && i != 0 && j < length-1)
+					{
+						moyprof = (grid[i][j-1].getProfondeur() + grid[i-1][j-1].getProfondeur() + grid[i-1][j].getProfondeur() + grid[i-1][j+1].getProfondeur())/4;
+						vari = (moyprof * vari)/100;
+						prof = moyprof + vari;
+					}
+					if(j == length-1 && i != 0)
+					{
+						moyprof = (grid[i][j-1].getProfondeur() + grid[i-1][j-1].getProfondeur() + grid[i-1][j].getProfondeur())/3;
+						vari = (moyprof * vari)/100;
+						prof = moyprof + vari;
+					}
+					if(prof < 0) prof = 0;
+					if(prof >= 1000) prof = 999;
+					
+					grid[i][j] = new Cell(new Vector2D(), new Vector2D(), prof);
+				}
 			}
 		}
 	}

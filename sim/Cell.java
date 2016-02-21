@@ -25,7 +25,6 @@ public class Cell {
 		vent = new Vector2D();
 		courant = new Vector2D();
 		profondeur = (float) Math.random() * profondeurMax;
-		//profondeur = 900;
 		decouvert = false;
 		salinite =(float) Math.random();
 	}

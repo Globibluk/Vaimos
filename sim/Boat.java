@@ -23,16 +23,13 @@ public class Boat {
 	public void move(float posX, float posY)
 	{
 		fPosX = posX;
-		if(fPosX >= world.getWorldLength() -1) fPosX = world.getWorldLength() -1;
+		if(fPosX >= world.getWorldHeight() -1) fPosX = world.getWorldHeight() -1;
 		if(fPosX < 0) fPosX = 0;
 		iPosX = Math.round(fPosX);
 		fPosY = posY;
-		if(fPosY >= world.getWorldHeight() -1) fPosY = world.getWorldHeight() -1;
+		if(fPosY >= world.getWorldLength() -1) fPosY = world.getWorldLength() -1;
 		if(fPosY < 0) fPosY = 0;
 		iPosY = Math.round(fPosY);
-		
-		System.out.println("" + iPosX + " " + iPosY + " " + " " + fPosX + " " + fPosY);
-
 	}
 	
 	public int getIPosX()
@@ -75,7 +72,8 @@ public class Boat {
 		return "Position : " + fPosX + "\t" + fPosY + "\n" +
 				"Vent : " + c.getVent().getX() + "\t" + c.getVent().getY() + "\n" +
 				"Courant : " + c.getCourant().getX() + "\t" + c.getCourant().getY() + "\n" +
-				"Salinite : " + c.getSalinite() + "\n";
+				"Salinite : " + c.getSalinite() + "\n" +
+				"Profondeur : " + c.getProfondeur()+ "\n";
 				
 	}
 

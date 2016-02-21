@@ -42,7 +42,7 @@ public class AffichageProfondeur extends JPanel{
 				{
 					double prof = (int) vaimos.getGridXY(i, j).getProfondeur();
 					prof = (prof / 1000) * 255;
-					g.setColor(new Color((int)prof, 0,(int)(255 - prof)));
+					g.setColor(new Color((int)(255 - prof), 0,(int)prof));
 					g.fillRect(i * spriteLength, j * spriteLength, spriteLength, spriteLength);
 				}
 				else
