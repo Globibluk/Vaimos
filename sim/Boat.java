@@ -4,10 +4,15 @@ public class Boat {
 
 	private int iPosX;
 	private int iPosY;
-	private float fPosX;
-	private float fPosY;
+	private double fPosX;
+	private double fPosY;
 	private World world;
 	private Cell[][] grid;									// Cellule deja exploré
+	private int tempsM = 0;
+	private int tempsH = 0;
+	private int tempsJ = 0;
+	
+	private Sailboat sailboat;
 	
 	public Boat(int posX, int posY, World world)
 	{
@@ -18,18 +23,42 @@ public class Boat {
 		this.world = world;
 		world.setBoat(this);
 		grid = new Cell[world.getWorldHeight()][world.getWorldLength()];
+		
+		sailboat = new Sailboat(0, 0, 0, 0);
 	}
 	
-	public void move(float posX, float posY)
+	public void calculate()
 	{
+		sailboat.update();
+		move(sailboat.getX(), sailboat.getY());		
+	}
+	
+	public void move(double posX, double posY)
+	{
+		time();
 		fPosX = posX;
 		if(fPosX >= world.getWorldHeight() -1) fPosX = world.getWorldHeight() -1;
 		if(fPosX < 0) fPosX = 0;
-		iPosX = Math.round(fPosX);
+		iPosX = Math.round((float)fPosX);
 		fPosY = posY;
 		if(fPosY >= world.getWorldLength() -1) fPosY = world.getWorldLength() -1;
 		if(fPosY < 0) fPosY = 0;
-		iPosY = Math.round(fPosY);
+		iPosY = Math.round((float)fPosY);
+	}
+	
+	public void time()
+	{
+		tempsM += 10;
+		if(tempsM == 60)
+		{
+			tempsM = 0;
+			tempsH++;
+		}
+		if(tempsH == 24)
+		{
+			tempsH = 0;
+			tempsJ++;
+		}
 	}
 	
 	public int getIPosX()
@@ -42,12 +71,12 @@ public class Boat {
 		return iPosY;
 	}
 	
-	public float getFPosX()
+	public double getFPosX()
 	{
 		return fPosX;
 	}
 	
-	public float getFPosY()
+	public double getFPosY()
 	{
 		return fPosY;
 	}
@@ -69,11 +98,13 @@ public class Boat {
 	public String toStringCell()
 	{
 		Cell c = grid[iPosX][iPosY];
-		return "Position : " + fPosX + "\t" + fPosY + "\n" +
+		return "\tJour : " + tempsJ + "\tHeure : " + tempsH + "\tMinutes : " + tempsM + "\n\n" +
+				"Position : " + fPosX + "\t" + fPosY + "\n" +
 				"Vent : " + c.getVent().getX() + "\t" + c.getVent().getY() + "\n" +
 				"Courant : " + c.getCourant().getX() + "\t" + c.getCourant().getY() + "\n" +
 				"Salinite : " + c.getSalinite() + "\n" +
-				"Profondeur : " + c.getProfondeur()+ "\n";
+				"Profondeur : " + c.getProfondeur()+ "\n" +
+				c.getVent().toString();
 				
 	}
 
