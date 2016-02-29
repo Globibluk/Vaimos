@@ -13,8 +13,8 @@ public class Vector2D {
 
 	public Vector2D()
 	{
-		x = (float) Math.random() * 2 - 1;
-		y = (float) Math.random() * 2 - 1;
+		x = (float) (Math.random() * 2 - 1);
+		y = (float) (Math.random() * 2 - 1);
 	}
 
 	public float getX()
@@ -25,5 +25,19 @@ public class Vector2D {
 	public float getY()
 	{
 		return y;
+	}
+	
+	public float getRotation()
+	{
+		float angle = 0;
+		if(x > 0) angle += 180;
+		angle += Math.acos(-y) * 180 / Math.PI;
+		
+		return angle;
+	}
+	
+	public String toString()
+	{
+		return getRotation() + "\n";
 	}
 }
