@@ -20,7 +20,7 @@ public class VectorsDisplay extends JPanel{
 	
 	private JFrame frame;
 	private Image Spritevecteur;
-	private int spriteLength = 16;
+	private int spriteLength = 8;
 	
 	private boolean state = true;
 	

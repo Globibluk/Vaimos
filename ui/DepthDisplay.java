@@ -16,7 +16,7 @@ public class DepthDisplay extends JPanel{
 	private int length;
 	private Boat vaimos;
 	private JFrame frame;
-	private int spriteLength = 16;
+	private int spriteLength = 8;
 	
 	private boolean state = true;
 	

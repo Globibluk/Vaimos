@@ -26,7 +26,7 @@ public class TravelDisplay extends JPanel{
 	private Image spriteRaw;
 	private Image spriteScan;
 	private Image spriteBoat;
-	private int spriteLength = 16;
+	private int spriteLength = 8;
 	
 	private Boat boat;
 	
@@ -94,6 +94,7 @@ public class TravelDisplay extends JPanel{
 			}
 		}
 		g2.drawImage(spriteBoat, (int) (spriteLength * boat.getFPosX()), (int) (spriteLength * boat.getFPosY()), spriteLength + 16, spriteLength + 16, frame);
+		g2.drawImage(spriteBoat, (int) (spriteLength * 20), (int) (spriteLength * 0), spriteLength + 16, spriteLength + 16, frame);
 		
 	}
 	
