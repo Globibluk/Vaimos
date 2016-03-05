@@ -2,32 +2,32 @@ package sim;
 
 public class Sailboat {
 	
-	double x,y,theta,v,omega,phi,phiPoint; // state variables
-    double beta, Jz, rg, rv, alphag, alphav, alphaf, alphatheta, l,m, Jx; //parameters
-    double a,psi;  //wind
-    double fg,fv,gamma,deltav,deltag,deltavmax;  //link variables
-    double eta;//viscosité
-    double hv; // hauteur de centre de poussée
+	double x,y,theta,v,omega,phi,phiPoint; 									// state variables
+    double beta, Jz, rg, rv, alphag, alphav, alphaf, alphatheta, l,m, Jx; 	//parameters
+    double a,psi;  															//wind
+    double fg,fv,gamma,deltav,deltag,deltavmax;  							//link variables
+    double eta;																//viscosité
+    double hv; 																// hauteur de centre de poussée
 
-    double ax,ay,bx,by;
+    double ax,ay,bx,by; 													// point de l'axe a-b
     int q;
     
-    int dt = 1; // A changer
+    int dt = 1; 															// A changer
     
     public Sailboat(int ax, int bx, int ay, int by)
     {
     	
-    	x=10.0; 
-    	y=10.0;
-    	theta =-3.0;
-    	v = 1;
+    	x=1.0; 
+    	y=1.0;
+    	theta =0.0;
+    	v = 0.1;
     	omega = 0.0;
-    	phi = 0.5;
+    	phi = 0;
     	phiPoint = 0;
         Jx = 3000.0;
-        Jz = 10000.0; // moments d'inertie
+        Jz = 10000.0; 														// moments d'inertie
         beta=0.1;
-        rg=2.0;
+        rg=1;
         alphatheta=6000;
         m=300.0;
         alphaf=1.0;
@@ -35,13 +35,13 @@ public class Sailboat {
         alphag=2000.0;
         l=1.0;
         alphav=1000.0;
-        a=0.1;
-        psi= 0;  //vent
-        hv = 4.00;  //Roulis
-        ax= 10;	//line
-        ay= 10;	//line
-        bx= 10;	//line
-        by= 10;    //line
+        a=1.0;
+        psi= 0;  															//vent
+        hv = 1.00;  														//Roulis
+        this.ax= 0;															//line
+        this.ay= 0;															//line
+        this.bx= 20;														//line
+        this.by= 0;    													//line
         q=1;
     }
     

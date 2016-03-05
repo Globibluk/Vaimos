@@ -24,7 +24,7 @@ public class Boat {
 		world.setBoat(this);
 		grid = new Cell[world.getWorldHeight()][world.getWorldLength()];
 		
-		sailboat = new Sailboat(0, 0, 0, 0);
+		sailboat = new Sailboat(iPosX, iPosX, iPosY, iPosY);
 	}
 	
 	public void calculate()
