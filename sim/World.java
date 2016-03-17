@@ -1,5 +1,6 @@
 package sim;
 
+import boat.Boat;
 import tools.Vector2D;
 
 public class World {

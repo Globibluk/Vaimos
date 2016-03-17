@@ -1,4 +1,4 @@
-package sim;
+package boat;
 
 public class Sailboat {
 	
@@ -12,36 +12,36 @@ public class Sailboat {
     double ax,ay,bx,by; 													// point de l'axe a-b
     int q;
     
-    int dt = 1; 															// A changer
+    double dt = 1.0; 															// A changer
     
     public Sailboat(int ax, int bx, int ay, int by)
     {
     	
-    	x=1.0; 
-    	y=1.0;
-    	theta =0.0;
+    	x= 0.0; 
+    	y= 0.0;
+    	theta = Math.PI/2;
     	v = 0.1;
     	omega = 0.0;
     	phi = 0;
     	phiPoint = 0;
         Jx = 3000.0;
         Jz = 10000.0; 														// moments d'inertie
-        beta=0.1;
-        rg=1;
-        alphatheta=6000;
-        m=300.0;
-        alphaf=1.0;
-        rv=1.0;
-        alphag=2000.0;
-        l=1.0;
-        alphav=1000.0;
-        a=1.0;
-        psi= 0;  															//vent
+        beta= 0.1;
+        rg= 1;
+        alphatheta= 6000;
+        m= 300.0;
+        alphaf= 1.0;
+        rv= 1.0;
+        alphag= 2000.0;
+        l= 1.0;
+        alphav= 1000.0;
+        a= 0.3;
+        psi= -4;  															//vent
         hv = 1.00;  														//Roulis
-        this.ax= 0;															//line
+        this.ax= 50;															//line
         this.ay= 0;															//line
-        this.bx= 20;														//line
-        this.by= 0;    													//line
+        this.bx= 50;														//line
+        this.by= 100;    													//line
         q=1;
     }
     
@@ -103,5 +103,13 @@ public class Sailboat {
     public double getY()
     {
     	return y;
+    }
+    
+    public void setCoordinates(int ax, int ay, int bx, int by)
+    {
+    	this.ax = ax;
+    	this.ay = ay;
+    	this.bx = bx;
+    	this.by = by;
     }
 }

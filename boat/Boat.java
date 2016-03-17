@@ -1,4 +1,7 @@
-package sim;
+package boat;
+
+import sim.Cell;
+import sim.World;
 
 public class Boat {
 
@@ -30,10 +33,11 @@ public class Boat {
 	public void calculate()
 	{
 		sailboat.update();
-		move(sailboat.getX(), sailboat.getY());		
+		move(sailboat.getX(), sailboat.getY());	
+		analyseCell();
 	}
 	
-	public void move(double posX, double posY)
+	private void move(double posX, double posY)
 	{
 		time();
 		fPosX = posX;
@@ -46,7 +50,12 @@ public class Boat {
 		iPosY = Math.round((float)fPosY);
 	}
 	
-	public void time()
+	public void changeTarget(int ax, int ay, int bx, int by)
+	{
+		sailboat.setCoordinates(ax, ay, bx, by);
+	}
+	
+	private void time()
 	{
 		tempsM += 10;
 		if(tempsM == 60)
@@ -88,14 +97,14 @@ public class Boat {
 		
 	}
 	
-	public void analyseCell()
+	private void analyseCell()
 	{
 		grid[iPosX][iPosY] = world.getCellXY(iPosX, iPosY);
-		System.out.println(toStringCell());
+		//System.out.println(toStringCell());
 		world.getCellXY(iPosX, iPosY).setDecouvert();
 	}
 	
-	public String toStringCell()
+	private String toStringCell()
 	{
 		Cell c = grid[iPosX][iPosY];
 		return "\tJour : " + tempsJ + "\tHeure : " + tempsH + "\tMinutes : " + tempsM + "\n\n" +

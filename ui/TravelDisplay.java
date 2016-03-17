@@ -9,7 +9,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import sim.Boat;
+import boat.Boat;
 import sim.World;
 
 public class TravelDisplay extends JPanel{

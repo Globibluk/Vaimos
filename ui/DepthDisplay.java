@@ -6,7 +6,7 @@ import java.awt.Graphics;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import sim.Boat;
+import boat.Boat;
 
 public class DepthDisplay extends JPanel{
 
