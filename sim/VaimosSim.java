@@ -1,17 +1,20 @@
 package sim;
 
 import java.awt.KeyboardFocusManager;
+import java.io.IOException;
 
 import boat.Boat;
 import boat.BoatController;
 import boat.SquareController;
+import interpreter.Interpreter;
+import interpreter.Loader;
 import ui.DepthDisplay;
 import ui.TravelDisplay;
 import ui.VaimosKeyEventDispatcher;
 
 public class VaimosSim {
 
-	public static void main(String[] args)
+	public static void main(String[] args) throws IOException
 	{
 		World world = new World(100, 100);
 		Boat boat = new Boat(15, 15, world);
@@ -25,6 +28,16 @@ public class VaimosSim {
 		
 		KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         manager.addKeyEventDispatcher(new VaimosKeyEventDispatcher(depthDisplay));
+        
+        Interpreter interpreter = new Interpreter();
+        Loader loader = new Loader(interpreter);
+        try
+        {
+        	loader.load("./src/Prog");
+        }
+        catch (Exception e) {}  
+        
+        System.out.println(interpreter.toString());
         		
 		while(value != 4)
 		{			

@@ -10,7 +10,7 @@ public class Boat {
 	private double fPosX;
 	private double fPosY;
 	private World world;
-	private Cell[][] grid;									// Cellule deja explorÃ©
+	private Cell[][] grid;									// Cellule déja explorée
 	private int tempsM = 0;
 	private int tempsH = 0;
 	private int tempsJ = 0;
