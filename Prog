@@ -1,1 +1,18 @@
-for a b
+value a = 15
+print a
+println
+value b = 12
+print b
+println
++ c a b
+print c
+println
+- d a b
+print d
+println
+* e a b
+print e
+println
+/ f a b
+print f
+println

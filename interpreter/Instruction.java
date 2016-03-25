@@ -30,4 +30,5 @@ public class Instruction {
 		s += "\n";
 		return s;
 	}
+	
 }

@@ -36,8 +36,7 @@ public class VaimosSim {
         	loader.load("./src/Prog");
         }
         catch (Exception e) {}  
-        
-        System.out.println(interpreter.toString());
+        interpreter.run();
         		
 		while(value != 4)
 		{			
