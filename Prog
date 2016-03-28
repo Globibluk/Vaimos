@@ -13,6 +13,8 @@ println f
 while a != b
 + b b 1
 println b
+for i 0 10 +
+println i
 end
 
-for i 0 10 +
+end
