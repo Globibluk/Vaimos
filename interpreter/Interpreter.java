@@ -2,7 +2,7 @@ package interpreter;
 
 import java.util.ArrayList;
 
-public class Interpreter extends Thread{
+public class Interpreter extends Thread {
 	
 	private ArrayList<Instruction> instructions;
 	private DataStructure dataStructure;
@@ -48,10 +48,8 @@ public class Interpreter extends Thread{
 		
 	public void execute()
 	{
-		String name;
-		String firstOp;
-		String secondOp;
-		Double value;
+		ArrayList<String> args;
+		Double value0, value1;
 		String s;
 		Instruction i;
 		
@@ -59,97 +57,81 @@ public class Interpreter extends Thread{
 		{
 			line++;
 			i = instructions.get(l);
-			
+			args = i.getArgs();
 			switch(i.getName())
 			{
 				case "":
 					break;
 			
 				case "value":
-					double valDouble = Double.parseDouble(i.getArgs().get(2));
-					dataStructure.setValue(i.getArgs().get(0), valDouble);
+					// gérer le "="
+					double valDouble = Double.parseDouble(args.get(2));
+					dataStructure.setValue(args.get(0), valDouble);
 					break;
 					
-				case "+":
-					name = i.getArgs().get(0);
-					firstOp = i.getArgs().get(1);
-					secondOp = i.getArgs().get(2);
-				
-					if(dataStructure.getValue(firstOp) != null)
-						value = (double) (dataStructure.getValue(firstOp));
-					else
-						value = Double.parseDouble(firstOp);
-				
-					if(dataStructure.getValue(secondOp) != null)
-						value += (double) dataStructure.getValue(secondOp);
-					else
-						value += Double.parseDouble(secondOp);
-				
-					dataStructure.setValue(name, value);
-					break;
-					
+				case "+": 
 				case "-":
-					name = i.getArgs().get(0);
-					firstOp = i.getArgs().get(1);
-					secondOp = i.getArgs().get(2);
-				
-					if(dataStructure.getValue(firstOp) != null)
-						value = (double) (dataStructure.getValue(firstOp));
-					else
-						value = Double.parseDouble(firstOp);
-				
-					if(dataStructure.getValue(secondOp) != null)
-						value -= (double) dataStructure.getValue(secondOp);
-					else
-						value -= Double.parseDouble(secondOp);
-				
-					dataStructure.setValue(name, value);
-					break;
-					
 				case "*":
-					name = i.getArgs().get(0);
-					firstOp = i.getArgs().get(1);
-					secondOp = i.getArgs().get(2);
-				
-					if(dataStructure.getValue(firstOp) != null)
-						value = (double) (dataStructure.getValue(firstOp));
+				case "/":
+					if(dataStructure.getValue(args.get(1)) != null)
+						value0 = (double) (dataStructure.getValue(args.get(1)));
 					else
-						value = Double.parseDouble(firstOp);
+						value0 = Double.parseDouble(args.get(1));
 				
-					if(dataStructure.getValue(secondOp) != null)
-						value *= (double) dataStructure.getValue(secondOp);
+					if(dataStructure.getValue(args.get(2)) != null)
+						value1 = (double) dataStructure.getValue(args.get(2));
 					else
-						value *= Double.parseDouble(secondOp);
+						value1 = Double.parseDouble(args.get(2));
 				
-					dataStructure.setValue(name, value);
+					switch(i.getName())
+					{
+						case "+":
+							value0 += value1;
+							break;
+						case "-":
+							value0 -= value1;
+							break;
+						case "*":
+							value0 *= value1;
+							break;
+						case "/":
+							value0 /= value1;
+							break;
+					}
+					dataStructure.setValue(args.get(0), value0);
 					break;
 					
-				case "/":
-					name = i.getArgs().get(0);
-					firstOp = i.getArgs().get(1);
-					secondOp = i.getArgs().get(2);
-				
-					if(dataStructure.getValue(firstOp) != null)
-						value = (double) (dataStructure.getValue(firstOp));
+				case "while":
+					
+					if(dataStructure.getValue(args.get(0)) != null)
+						value0 = (double) (dataStructure.getValue(args.get(0)));
 					else
-						value = Double.parseDouble(firstOp);
+						value0 = Double.parseDouble(args.get(0));
 				
-					if(dataStructure.getValue(secondOp) != null)
-						value /= (double) dataStructure.getValue(secondOp);
+					if(dataStructure.getValue(args.get(2)) != null)
+						value1 = (double) dataStructure.getValue(args.get(2));
 					else
-						value /= Double.parseDouble(secondOp);
-				
-					dataStructure.setValue(name, value);
+						value1 = Double.parseDouble(args.get(2));
+					
+					switch(args.get(1))
+					{
+						case "==":
+							
+						case "<":
+						case "<=":
+						case ">":
+						case ">=":		
+					}
 					break;
 					
 				case "print":
+				case "println":
 					s = "";
 					s += dataStructure.getValue(i.getArgs().get(0));
-					System.out.print(s);
-					break;
-					
-				case "println":
-					System.out.println();
+					if(i.getName() == "print") 
+						System.out.print(s);
+					else 
+						System.out.println(s);
 					break;
 					
 				default:
@@ -158,5 +140,18 @@ public class Interpreter extends Thread{
 					
 			}
 		}
+	}
+	
+	public void gotoEnd(int line)
+	{
+		Instruction i;
+		ArrayList<String> args;
+		
+		for(int l=line;l<instructions.size();l++)
+		{
+			line++;
+			i = instructions.get(l);
+		}
+			
 	}
 }

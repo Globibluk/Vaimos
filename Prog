@@ -1,18 +1,12 @@
 value a = 15
-print a
-println
+println a
 value b = 12
-print b
-println
+println b
 + c a b
-print c
-println
+println c
 - d a b
-print d
-println
+println d
 * e a b
-print e
-println
+println e
 / f a b
-print f
-println
+println f
