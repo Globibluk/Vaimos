@@ -1,6 +1,6 @@
-value a = 15
+value a 15
 println a
-value b = 12
+value b 12
 println b
 + c a b
 println c
@@ -10,3 +10,9 @@ println d
 println e
 / f a b
 println f
+while a != b
++ b b 1
+println b
+end
+
+for i 0 10 +

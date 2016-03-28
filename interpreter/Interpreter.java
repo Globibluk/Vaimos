@@ -13,7 +13,7 @@ public class Interpreter extends Thread {
 	{
 		instructions = new ArrayList<Instruction>();
 		dataStructure =  new DataStructure();
-		line = -1;
+		line = 0;
 	}
 	
 	public void addInstruction(Instruction i)
@@ -52,11 +52,14 @@ public class Interpreter extends Thread {
 		Double value0, value1;
 		String s;
 		Instruction i;
+		ArrayList<Integer> lastLoop = new ArrayList<Integer>();
 		
-		for(int l=0;l<instructions.size();l++)
+		for(line=0;line<instructions.size();line++)
 		{
-			line++;
-			i = instructions.get(l);
+			try {
+				Thread.sleep(250);
+			} catch (InterruptedException e) {}
+			i = instructions.get(line);
 			args = i.getArgs();
 			switch(i.getName())
 			{
@@ -64,8 +67,7 @@ public class Interpreter extends Thread {
 					break;
 			
 				case "value":
-					// gérer le "="
-					double valDouble = Double.parseDouble(args.get(2));
+					double valDouble = Double.parseDouble(args.get(1));
 					dataStructure.setValue(args.get(0), valDouble);
 					break;
 					
@@ -102,7 +104,7 @@ public class Interpreter extends Thread {
 					break;
 					
 				case "while":
-					
+					if(!lastLoop.contains(line)) lastLoop.add(line);					
 					if(dataStructure.getValue(args.get(0)) != null)
 						value0 = (double) (dataStructure.getValue(args.get(0)));
 					else
@@ -112,16 +114,35 @@ public class Interpreter extends Thread {
 						value1 = (double) dataStructure.getValue(args.get(2));
 					else
 						value1 = Double.parseDouble(args.get(2));
-					
 					switch(args.get(1))
 					{
 						case "==":
-							
+							if(value0 - value1 != 0) gotoEnd(lastLoop);							
+							break;
+						case "!=":
+							if(value0 - value1 == 0) gotoEnd(lastLoop);
+							break;
 						case "<":
+							if(value0 - value1 >= 0) gotoEnd(lastLoop);
+							break;
 						case "<=":
+							if(value0 - value1 > 0) gotoEnd(lastLoop);
+							break;
 						case ">":
-						case ">=":		
+							if(value0 - value1 <= 0) gotoEnd(lastLoop);
+							break;
+						case ">=":
+							if(value0 - value1 < 0) gotoEnd(lastLoop);
+							break;
 					}
+					break;
+					
+				case "for":
+					if(!lastLoop.contains(line)) lastLoop.add(line);
+					break;
+					
+				case "end":
+					line = lastLoop.get(lastLoop.size()-1)-1;
 					break;
 					
 				case "print":
@@ -142,16 +163,18 @@ public class Interpreter extends Thread {
 		}
 	}
 	
-	public void gotoEnd(int line)
+	public void gotoEnd(ArrayList<Integer> lastLoop)
 	{
-		Instruction i;
-		ArrayList<String> args;
+		int l = line;
+		Instruction i = instructions.get(l);
 		
-		for(int l=line;l<instructions.size();l++)
+		while(!i.getName().equals("end"))
 		{
-			line++;
+			l = ++line;
 			i = instructions.get(l);
+			if(i.getName() == null) new NoEndException("" + lastLoop.get(lastLoop.size()-1));
 		}
-			
+		line++;
+		lastLoop.remove(lastLoop.size()-1);
 	}
 }
