@@ -57,7 +57,7 @@ public class Interpreter extends Thread {
 		for(line=0;line<instructions.size();line++)
 		{
 			try {
-				Thread.sleep(250);
+				Thread.sleep(50);
 			} catch (InterruptedException e) {}
 			i = instructions.get(line);
 			args = i.getArgs();
@@ -138,7 +138,40 @@ public class Interpreter extends Thread {
 					break;
 					
 				case "for":
-					if(!lastLoop.contains(line)) lastLoop.add(line);
+					if(!lastLoop.contains(line))
+					{
+						lastLoop.add(line);
+						dataStructure.setValue(args.get(0), Double.parseDouble(args.get(1)));
+					}
+					if(dataStructure.getValue(args.get(0)) != null)
+{
+						value0 = (double)(dataStructure.getValue(args.get(0)));
+					}
+					else
+					{
+						value0 = 0.0;
+						new WrongVariableException(line);
+					}
+					if(dataStructure.getValue(args.get(2)) != null)
+						value1 = (double) (dataStructure.getValue(args.get(2)));
+					else
+						value1 = Double.parseDouble(args.get(2));
+					if(value0.equals(value1-1)) gotoEnd(lastLoop);
+					else
+					{
+						switch(args.get(3))
+						{
+						case "+":
+							dataStructure.setValue(args.get(0), value0+1);
+							break;
+						case "-":
+							dataStructure.setValue(args.get(0), value0-1);
+							break;
+						default:
+							new WrongCodeException(line);
+							break;
+						}
+					}
 					break;
 					
 				case "end":
@@ -178,3 +211,5 @@ public class Interpreter extends Thread {
 		lastLoop.remove(lastLoop.size()-1);
 	}
 }
+
+
