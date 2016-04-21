@@ -2,6 +2,7 @@ package boat;
 
 import sim.Cell;
 import sim.World;
+import tools.Vector2D;
 
 public class Boat {
 
@@ -10,7 +11,7 @@ public class Boat {
 	private double fPosX;
 	private double fPosY;
 	private World world;
-	private Cell[][] grid;									// Cellule déja explorée
+	private Cell[][] grid;									// Cellule dÃ©ja explorÃ©e
 	private int tempsM = 0;
 	private int tempsH = 0;
 	private int tempsJ = 0;
@@ -50,7 +51,7 @@ public class Boat {
 		iPosY = Math.round((float)fPosY);
 	}
 	
-	public void setTarget(int ax, int ay, int bx, int by)
+	public void changeTarget(int ax, int ay, int bx, int by)
 	{
 		sailboat.setCoordinates(ax, ay, bx, by);
 	}
@@ -100,11 +101,30 @@ public class Boat {
 	private void analyseCell()
 	{
 		grid[iPosX][iPosY] = world.getCellXY(iPosX, iPosY);
-		//System.out.println(toStringCell());
+		System.out.println(toStringCell());
 		world.getCellXY(iPosX, iPosY).setDecouvert();
 	}
 	
-	@SuppressWarnings("unused")
+	private float getProfPos()
+	{
+		return grid[iPosX][iPosY].getProfondeur();
+	}
+	
+	private float getSalPos()
+	{
+		return grid[iPosX][iPosY].getSalinite();
+	}
+	
+	private Vector2D getVentPos()
+	{
+		return grid[iPosX][iPosY].getVent();
+	}
+	
+	private Vector2D getCourantPos()
+	{
+		return grid[iPosX][iPosY].getCourant();
+	}
+	
 	private String toStringCell()
 	{
 		Cell c = grid[iPosX][iPosY];
