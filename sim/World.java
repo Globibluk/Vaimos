@@ -1,5 +1,6 @@
 package sim;
 
+
 import boat.Boat;
 import tools.Vector2D;
 
@@ -25,6 +26,14 @@ public class World {
 		float prof = 0;
 		float vari;
 		float moyprof;
+		Vector2D vent = new Vector2D();
+		Vector2D courant = new Vector2D();
+		float xtmp = vent.getX();
+		xtmp *= xtmp;
+		float ytmp = vent.getY();
+		ytmp *= ytmp;
+		courant.setX(xtmp);
+		courant.setY(ytmp);
 		for(int i=0;i<height;i++)
 		{
 			for(int j=0;j<length;j++)
@@ -32,6 +41,8 @@ public class World {
 				if( i == 0 && j == 0)
 				{
 					grid[i][j] = new Cell();
+					grid[i][j].setVent(vent);
+					grid[i][j].setCourant(courant);
 				}
 				else
 				{
@@ -63,18 +74,29 @@ public class World {
 					if(prof < 0) prof = 0;
 					if(prof >= 1000) prof = 999;
 					
-					grid[i][j] = new Cell(new Vector2D(), new Vector2D(), prof);
+					grid[i][j] = new Cell(vent, courant, prof);
 				}
 			}
 		}
 	}
 	
 	public void changementVent(){
+		Vector2D newvent = new Vector2D();
+		float addx =(float)( Math.random()*2 ) - 1;
+		float addy =(float)( Math.random()*2 ) - 1;
+		float xtmp = grid[0][0].getVent().getX()+addx;
+		float ytmp = grid[0][0].getVent().getY()+addy;
+		newvent.setX(xtmp);
+		newvent.setY(ytmp);
+		ytmp *= ytmp;
+		xtmp *= xtmp;
+		Vector2D newcourant = new Vector2D(xtmp, ytmp);
 		for(int i=0;i<worldHeight;i++)
 		{
 			for(int j=0;j<worldLength;j++)
 			{
-				grid[i][j].setVent();
+				grid[i][j].setVent(newvent);
+				grid[i][j].setCourant(newcourant);
 			}
 		}
 	}
@@ -108,5 +130,4 @@ public class World {
 	{
 		return boat;
 	}
-	
 }
