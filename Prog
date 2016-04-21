@@ -1,23 +1,8 @@
-value a 15
-
-value b 12
-
-while a != b
-+ b b 1
-
-for i 0 10 +
-print i
-end
-
-print b
-end
-
-if a == b
+list list
+add list 10
+get list 0 a
 print a
-
-else
+set list 0 15
+get list 0 a
 print a
-print b
-fi
-
-stop
+setTarget 1 2 3 4

@@ -2,12 +2,15 @@ package interpreter;
 
 import java.util.ArrayList;
 
+import boat.Boat;
+
 public class Interpreter extends Thread {
 	
 	private ArrayList<Instruction> instructions;
 	private DataStructure dataStructure;
 	
 	private int line;
+	private Boat boat;
 	
 	public Interpreter()
 	{
@@ -19,6 +22,11 @@ public class Interpreter extends Thread {
 	public void addInstruction(Instruction i)
 	{
 		instructions.add(i);
+	}
+	
+	public void setBoat(Boat boat)
+	{
+		this.boat = boat;
 	}
 	
 	public String toString()
@@ -33,22 +41,24 @@ public class Interpreter extends Thread {
 		try
 		{
 			execute();
-		} catch (Exception e)
-		{
-			if(e instanceof NumberFormatException)
-				new WrongVariableException(line);
-			if(e instanceof IndexOutOfBoundsException)
-				new WrongCodeException(line);
-			if(e.getMessage() == "Unknown instruction at line " + line)
-				new UnknownInstructionException(line);				
-			else
-				e.printStackTrace();
 		}
+		catch (NumberFormatException e)
+		{
+			System.out.println("Wrong variable at line " + line);
+		}
+		catch (IndexOutOfBoundsException e)
+		{
+			System.out.println("Wrong code at line " + line);
+		} catch (Exception e) {}
 	}
 		
-	public void execute()
+	@SuppressWarnings("unchecked")
+	public void execute() throws Exception
 	{
 		ArrayList<String> args;
+		ArrayList<Double> dList;
+		Object result;
+		int index;
 		Double value0, value1;
 		String s;
 		Instruction i;
@@ -72,6 +82,52 @@ public class Interpreter extends Thread {
 				case "value":
 					double valDouble = Double.parseDouble(args.get(1));
 					dataStructure.setValue(args.get(0), valDouble);
+					break;
+					
+				case "list":
+					ArrayList<Double> list = new ArrayList<Double>();
+					dataStructure.setValue(args.get(0), list);
+					break;
+				
+				case "set":
+
+					result = dataStructure.getValue(args.get(0));
+					if(!(result instanceof ArrayList)) throw new WrongVariableException(line);
+					dList = (ArrayList<Double>) result;
+					index = (int) getData(args.get(1));
+					value0 = (double) getData(args.get(2));
+					
+					dList.set(index, value0);
+					break;
+					
+				case "get":
+					
+					result = dataStructure.getValue(args.get(0));
+					if(!(result instanceof ArrayList)) throw new WrongVariableException(line);
+					dList = (ArrayList<Double>) result;
+					index = (int) (getData(args.get(1)));
+					s = args.get(2);
+					value1 = dList.get(index);
+					
+					dataStructure.setValue(s, value1);
+					break;
+					
+				case "add":
+					result = dataStructure.getValue(args.get(0));
+					if(!(result instanceof ArrayList)) throw new WrongVariableException(line);
+					dList = (ArrayList<Double>) result;
+					value0 = (double) getData(args.get(1));
+					
+					dList.add(value0);
+					break;
+					
+				case "remove":
+					result = dataStructure.getValue(args.get(0));
+					if(!(result instanceof ArrayList)) throw new WrongVariableException(line);
+					dList = (ArrayList<Double>) result;
+					index = (int) getData(args.get(1));
+					
+					dList.remove(index);
 					break;
 					
 				case "+": 
@@ -145,8 +201,7 @@ public class Interpreter extends Thread {
 							dataStructure.setValue(args.get(0), value0-1);
 							break;
 						default:
-							new WrongCodeException(line);
-							break;
+							throw new WrongCodeException(line);
 						}
 					}
 					break;
@@ -166,9 +221,22 @@ public class Interpreter extends Thread {
 						System.out.println(s);
 					break;
 					
-				default:
-					new UnknownInstructionException(line);
+				case "calculate":
+					boat.calculate();
 					break;
+				
+				case "setTarget":
+					int ax, ay, bx, by;
+					ax = (int) getData(args.get(0));
+					ay = (int) getData(args.get(1));
+					bx = (int) getData(args.get(2));
+					by = (int) getData(args.get(3));
+					
+					boat.setTarget(ax, ay, bx, by);
+					break;
+										
+				default:
+					throw new UnknownInstructionException(line);
 					
 			}
 		}
@@ -269,5 +337,18 @@ public class Interpreter extends Thread {
 		}
 		
 		return false;
+	}
+	
+	private double getData(String key) throws WrongVariableException
+	{
+		double value;
+		try
+		{
+			value = Double.parseDouble(key);
+		} catch (Exception e)
+		{
+			value = (double) dataStructure.getValue(key);
+		}
+		return value;
 	}
 }

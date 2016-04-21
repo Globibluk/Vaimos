@@ -35,8 +35,19 @@ public class VaimosSim {
         {
         	loader.load("./src/Prog");
         }
-        catch (Exception e) {}  
-        interpreter.run();
+        catch (Exception e)
+        {
+        	System.out.println("Can't load program");
+        }
+        try
+        {
+        	interpreter.run();
+        }
+        catch (Exception e)
+        {
+        	System.out.println("Runtime error");
+        }
+        
         		
 		while(value != 4)
 		{			

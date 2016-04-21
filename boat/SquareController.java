@@ -20,25 +20,25 @@ public class SquareController implements BoatController {
 			case 0:
 				
 				if(posX > 85) return 1;
-				boat.changeTarget(posX, posY, 85, 15);
+				boat.setTarget(posX, posY, 85, 15);
 				boat.calculate();
 				return 0;
 
 			case 1:
 				if(posY > 85) return 2;
-				boat.changeTarget(posX, posY, 85, 85);
+				boat.setTarget(posX, posY, 85, 85);
 				boat.calculate();
 				return 1;
 				
 			case 2:
 				if(posX < 15) return 3;
-				boat.changeTarget(posX, posY, 15, 85);
+				boat.setTarget(posX, posY, 15, 85);
 				boat.calculate();
 				return 2;
 				
 			case 3:
 				if(posY < 15) return 4;
-				boat.changeTarget(posX, posY, 15, 15);
+				boat.setTarget(posX, posY, 15, 15);
 				boat.calculate();
 				return 3;
 				
