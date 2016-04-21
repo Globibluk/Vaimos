@@ -1,20 +1,23 @@
 value a 15
-println a
+
 value b 12
-println b
-+ c a b
-println c
-- d a b
-println d
-* e a b
-println e
-/ f a b
-println f
+
 while a != b
 + b b 1
-println b
+
 for i 0 10 +
-println i
+print i
 end
 
+print b
 end
+
+if a == b
+print a
+
+else
+print a
+print b
+fi
+
+stop

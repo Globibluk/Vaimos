@@ -65,6 +65,9 @@ public class Interpreter extends Thread {
 			{
 				case "":
 					break;
+				
+				case "stop":
+					return;
 			
 				case "value":
 					double valDouble = Double.parseDouble(args.get(1));
@@ -75,15 +78,9 @@ public class Interpreter extends Thread {
 				case "-":
 				case "*":
 				case "/":
-					if(dataStructure.getValue(args.get(1)) != null)
-						value0 = (double) (dataStructure.getValue(args.get(1)));
-					else
-						value0 = Double.parseDouble(args.get(1));
-				
-					if(dataStructure.getValue(args.get(2)) != null)
-						value1 = (double) dataStructure.getValue(args.get(2));
-					else
-						value1 = Double.parseDouble(args.get(2));
+
+					value0 = initValue(args, 1);
+					value1 = initValue(args, 2);
 				
 					switch(i.getName())
 					{
@@ -103,38 +100,29 @@ public class Interpreter extends Thread {
 					dataStructure.setValue(args.get(0), value0);
 					break;
 					
+				case "if":
+					value0 = initValue(args, 0);
+					value1 = initValue(args, 2);
+					if(test(i.getName(), value0, value1, args))
+						gotoNext();
+					
+					break;
+					
+				case "else":
+					gotoNext();
+					break;
+				case "fi":
+					break;
+					
 				case "while":
-					if(!lastLoop.contains(line)) lastLoop.add(line);					
-					if(dataStructure.getValue(args.get(0)) != null)
-						value0 = (double) (dataStructure.getValue(args.get(0)));
-					else
-						value0 = Double.parseDouble(args.get(0));
-				
-					if(dataStructure.getValue(args.get(2)) != null)
-						value1 = (double) dataStructure.getValue(args.get(2));
-					else
-						value1 = Double.parseDouble(args.get(2));
-					switch(args.get(1))
+					if(!lastLoop.contains(line))
 					{
-						case "==":
-							if(value0 - value1 != 0) gotoEnd(lastLoop);							
-							break;
-						case "!=":
-							if(value0 - value1 == 0) gotoEnd(lastLoop);
-							break;
-						case "<":
-							if(value0 - value1 >= 0) gotoEnd(lastLoop);
-							break;
-						case "<=":
-							if(value0 - value1 > 0) gotoEnd(lastLoop);
-							break;
-						case ">":
-							if(value0 - value1 <= 0) gotoEnd(lastLoop);
-							break;
-						case ">=":
-							if(value0 - value1 < 0) gotoEnd(lastLoop);
-							break;
+						lastLoop.add(line);
 					}
+					value0 = initValue(args, 0);
+					value1 = initValue(args, 2);
+					if(test(i.getName(), value0, value1, args)) gotoEnd(lastLoop);
+					
 					break;
 					
 				case "for":
@@ -143,19 +131,8 @@ public class Interpreter extends Thread {
 						lastLoop.add(line);
 						dataStructure.setValue(args.get(0), Double.parseDouble(args.get(1)));
 					}
-					if(dataStructure.getValue(args.get(0)) != null)
-{
-						value0 = (double)(dataStructure.getValue(args.get(0)));
-					}
-					else
-					{
-						value0 = 0.0;
-						new WrongVariableException(line);
-					}
-					if(dataStructure.getValue(args.get(2)) != null)
-						value1 = (double) (dataStructure.getValue(args.get(2)));
-					else
-						value1 = Double.parseDouble(args.get(2));
+					value0 = initValue(args, 0);
+					value1 = initValue(args, 2);
 					if(value0.equals(value1-1)) gotoEnd(lastLoop);
 					else
 					{
@@ -175,9 +152,10 @@ public class Interpreter extends Thread {
 					break;
 					
 				case "end":
-					line = lastLoop.get(lastLoop.size()-1)-1;
+					if(lastLoop.size() > 0)
+						line = lastLoop.get(lastLoop.size()-1)-1;
 					break;
-					
+
 				case "print":
 				case "println":
 					s = "";
@@ -195,21 +173,101 @@ public class Interpreter extends Thread {
 			}
 		}
 	}
-	
-	public void gotoEnd(ArrayList<Integer> lastLoop)
+
+	private double initValue(ArrayList<String> args, int index)
 	{
-		int l = line;
+		if(this.dataStructure.getValue(args.get(index)) != null)
+			return (double) (this.dataStructure.getValue(args.get(index)));
+		else
+			return Double.parseDouble(args.get(index));
+	}
+	
+	private void gotoEnd(ArrayList<Integer> lastLoop)
+	{
+		int l = ++line;
+		int ignore = 0;
+		String name;
 		Instruction i = instructions.get(l);
-		
-		while(!i.getName().equals("end"))
+
+		while(!i.getName().equals("end") || ignore > 0)
 		{
+			name = i.getName();
+			if(name.equals("end"))
+				ignore--;
+			if(name.equals("while") || name.equals("for"))
+				ignore++;
+				
 			l = ++line;
-			i = instructions.get(l);
-			if(i.getName() == null) new NoEndException("" + lastLoop.get(lastLoop.size()-1));
+			try
+			{
+				i = instructions.get(l);
+			} catch (Exception e)
+			{
+				new NoEndException("" + lastLoop.get(lastLoop.size()-1));
+				return;
+			}
 		}
-		line++;
 		lastLoop.remove(lastLoop.size()-1);
 	}
+	
+	private void gotoNext()
+	{
+		int sourceLine = line;
+		int l = ++line;
+		int ignore = 0;
+		String name;
+		Instruction i = instructions.get(l);
+
+		while(!(i.getName().equals("fi") || i.getName().equals("else")) || ignore > 0)
+		{
+			name = i.getName();
+			if(name.equals("fi"))
+				ignore--;
+			if(name.equals("if"))
+				ignore++;
+				
+			l = ++line;
+			try
+			{
+				i = instructions.get(l);
+			} catch (Exception e)
+			{
+				new WrongIfException(sourceLine);
+				return;
+			}
+		}
+	}
+	
+	private boolean test(String test, double value0, double value1, ArrayList<String> args)
+	{
+		switch(args.get(1))
+		{
+			case "==":
+				if(value0 - value1 != 0) 
+					return true;
+				break;
+			case "!=":
+				if(value0 - value1 == 0) 
+					return true;
+				break;
+			case "<":
+				if(value0 - value1 >= 0) 
+					return true;
+				break;
+			case "<=":
+				if(value0 - value1 > 0) 
+					return true;
+				break;
+			case ">":
+				if(value0 - value1 <= 0) 
+					return true;
+				break;
+			case ">=":
+				if(value0 - value1 < 0) 
+					return true;
+				break;
+		}
+		
+		return false;
+	}
 }
-
-
