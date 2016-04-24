@@ -15,9 +15,9 @@ public class Loader {
 		this.interpreter = interpreter;
 	}
 	
-	public void load(String fileName) throws IOException
+	public void load(File file) throws IOException
 	{
-		try (BufferedReader br = new BufferedReader(new FileReader(new File(fileName))))
+		try (BufferedReader br = new BufferedReader(new FileReader(file)))
 		{
 		    String line;
 		    while ((line = br.readLine()) != null) {
@@ -29,7 +29,7 @@ public class Loader {
 		}
 		catch (Exception e)
 		{
-			System.out.println("Can't load file: " + fileName);
+			System.out.println("Can't load file");
 		}		
 	}
 }

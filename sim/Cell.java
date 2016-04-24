@@ -34,9 +34,9 @@ public class Cell {
 		return vent;
 	}
 	
-	public void setVent(Vector2D ve)
+	public void setVent()
 	{
-		vent = ve;
+		vent = new Vector2D();
 	}
 	
 	public Vector2D getCourant()
@@ -64,9 +64,5 @@ public class Cell {
 
 	public void setDecouvert() {
 		this.decouvert = true;
-	}
-
-	public void setCourant(Vector2D courant) {
-		this.courant = courant;
 	}
 }

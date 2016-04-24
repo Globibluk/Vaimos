@@ -31,7 +31,6 @@ public class DepthDisplay extends JPanel{
 	    frame.setTitle("Projet VAIMOS");
 	    frame.setSize(height * spriteLength, length	* spriteLength);
 	    frame.add(this);
-	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 	    frame.setVisible(state);
 		setFocusable(true);
 	}
