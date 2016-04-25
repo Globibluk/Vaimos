@@ -34,8 +34,11 @@ public class Boat {
 	public void calculate()
 	{
 		sailboat.update();
-		move(sailboat.getX(), sailboat.getY());	
-		analyseCell();
+		if(world.getCellXY(iPosX, iPosY).getProfondeur()!=0)
+		{
+			move(sailboat.getX(), sailboat.getY());
+			analyseCell();
+		}
 	}
 	
 	private void move(double posX, double posY)
