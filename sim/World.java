@@ -9,6 +9,7 @@ public class World {
 	private Cell[][] grid;
 	private static int worldHeight;
 	private static int worldLength;
+	private static float maxWorldDepth;
 	
 	private Boat boat;
 	
@@ -17,6 +18,7 @@ public class World {
 		grid = new Cell[height][length];
 		worldHeight = height;
 		worldLength = length;
+		maxWorldDepth = height;
 		populateGrid(height, length);
 	}
 	
@@ -24,8 +26,6 @@ public class World {
 	{
 		
 		float prof = 0;
-		float vari;
-		float moyprof;
 		Vector2D vent = new Vector2D();
 		Vector2D courant = new Vector2D();
 		float xtmp = vent.getX();
@@ -40,7 +40,6 @@ public class World {
 			{
 				prof = worldHeight-i-(worldHeight/100*20);
 				grid[i][j] = new Cell(vent, courant, prof);
-				
 				/*if( i == 0 && j == 0)
 				{
 					grid[i][j] = new Cell();
@@ -91,6 +90,10 @@ public class World {
 		}
 	}
 	
+	public static float getMaxWorldDepth() {
+		return maxWorldDepth;
+	}
+
 	public void changementVent(){
 		Vector2D newvent = new Vector2D();
 		float addx =(float)( Math.random()*2 ) - 1;
