@@ -54,7 +54,7 @@ public class Boat {
 		iPosY = Math.round((float)fPosY);
 	}
 	
-	public void changeTarget(int ax, int ay, int bx, int by)
+	public void setTarget(int ax, int ay, int bx, int by)
 	{
 		sailboat.setCoordinates(ax, ay, bx, by);
 	}
