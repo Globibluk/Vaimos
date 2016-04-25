@@ -52,7 +52,7 @@ public class DepthDisplay extends JPanel{
 					}
 					else
 					{
-						prof = (prof / maxprof) * 255;
+						prof = (prof / vaimos.getWorld().getMaxWorldDepth()) * 255;
 						g.setColor(new Color((int)prof, 0,(int)(255 - prof)));
 						g.fillRect(i * spriteLength, j * spriteLength, spriteLength, spriteLength);
 					}
