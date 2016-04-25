@@ -45,9 +45,17 @@ public class DepthDisplay extends JPanel{
 				if(vaimos.getGridXY(i, j) != null)
 				{
 					double prof = (int) vaimos.getGridXY(i, j).getProfondeur();
-					prof = (prof / 1000) * 255;
-					g.setColor(new Color((int)(255 - prof), 0,(int)prof));
-					g.fillRect(i * spriteLength, j * spriteLength, spriteLength, spriteLength);
+					if(prof==0)
+					{
+						g.setColor(new Color(0, 255, 0));
+						g.fillRect(i * spriteLength, j * spriteLength, spriteLength, spriteLength);
+					}
+					else
+					{
+						prof = (prof / maxprof) * 255;
+						g.setColor(new Color((int)prof, 0,(int)(255 - prof)));
+						g.fillRect(i * spriteLength, j * spriteLength, spriteLength, spriteLength);
+					}
 				}
 				else
 				{
