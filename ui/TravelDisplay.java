@@ -26,6 +26,7 @@ public class TravelDisplay extends JPanel{
 	private Image spriteRaw;
 	private Image spriteScan;
 	private Image spriteBoat;
+	private Image spriteRock;
 	private int spriteLength = 8;
 	
 	private Boat boat;
@@ -70,6 +71,13 @@ public class TravelDisplay extends JPanel{
 		{
 			System.out.println("Sprite non loaded :" + "boat");
 		}
+		try
+		{
+			spriteRock = ImageIO.read(new File("./src/ressources/rock.png"));
+		} catch (Exception e)
+		{
+			System.out.println("Sprite non loaded :" + "rock");
+		}
 	}
 	
 	public void paint(Graphics g)
@@ -89,6 +97,11 @@ public class TravelDisplay extends JPanel{
 				{
 				g2.drawImage(spriteRaw, spriteLength * i, spriteLength
 						* j, spriteLength, spriteLength, frame);
+				}
+				if(world.getGrid()[i][j].getProfondeur()<=0)
+				{
+					g2.drawImage(spriteRock, spriteLength * i, spriteLength
+							* j, spriteLength, spriteLength, frame);
 				}
 			}
 		}
