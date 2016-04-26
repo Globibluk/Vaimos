@@ -27,8 +27,8 @@ public class MenuVaimos extends JFrame implements ActionListener {
 	
 	public MenuVaimos()
 	{
-		panelSetup();
 		setTitle("VAIMOS");
+		panelSetup();
 		add(panel);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pack();
@@ -78,8 +78,6 @@ public class MenuVaimos extends JFrame implements ActionListener {
 		}
 		
 		if(source == runButton && loaded)
-			sim.launch();
-		
+			sim.start();		
 	}
-
 }

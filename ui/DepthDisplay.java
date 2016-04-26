@@ -18,7 +18,7 @@ public class DepthDisplay extends JPanel{
 	private JFrame frame;
 	private int spriteLength = 8;
 	
-	private boolean state = true;
+	private boolean state = false;
 	
 	
 	public DepthDisplay(Boat vai) 
@@ -62,7 +62,6 @@ public class DepthDisplay extends JPanel{
 					g.setColor(new Color(255, 255, 255));
 					g.fillRect(i * spriteLength, j * spriteLength, spriteLength, spriteLength);
 				}
-				
 			}
 		}
 		

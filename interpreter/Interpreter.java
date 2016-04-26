@@ -161,12 +161,12 @@ public class Interpreter extends Thread {
 					value1 = initValue(args, 2);
 					if(test(i.getName(), value0, value1, args))
 						gotoNext();
-					
 					break;
 					
 				case "else":
 					gotoNext();
 					break;
+					
 				case "fi":
 					break;
 					
@@ -219,6 +219,22 @@ public class Interpreter extends Thread {
 						System.out.print(s);
 					else 
 						System.out.println(s);
+					break;
+					
+				case "posx":
+					dataStructure.setValue(i.getArgs().get(0), boat.getIPosX());
+					break;
+					
+				case "posy":
+					dataStructure.setValue(i.getArgs().get(0), boat.getIPosY());
+					break;
+					
+				case "depth":
+					dataStructure.setValue(i.getArgs().get(0), boat.getProfPos());
+					break;
+					
+				case "salt":
+					dataStructure.setValue(i.getArgs().get(0), boat.getSalPos());
 					break;
 					
 				case "calculate":

@@ -101,31 +101,31 @@ public class Boat {
 		
 	}
 	
+	public float getProfPos()
+	{
+		return grid[iPosX][iPosY].getProfondeur();
+	}
+	
+	public float getSalPos()
+	{
+		return grid[iPosX][iPosY].getSalinite();
+	}
+	
+	public Vector2D getVentPos()
+	{
+		return grid[iPosX][iPosY].getVent();
+	}
+	
+	public Vector2D getCourantPos()
+	{
+		return grid[iPosX][iPosY].getCourant();
+	}
+	
 	private void analyseCell()
 	{
 		grid[iPosX][iPosY] = world.getCellXY(iPosX, iPosY);
 		System.out.println(toStringCell());
 		world.getCellXY(iPosX, iPosY).setDecouvert();
-	}
-	
-	private float getProfPos()
-	{
-		return grid[iPosX][iPosY].getProfondeur();
-	}
-	
-	private float getSalPos()
-	{
-		return grid[iPosX][iPosY].getSalinite();
-	}
-	
-	private Vector2D getVentPos()
-	{
-		return grid[iPosX][iPosY].getVent();
-	}
-	
-	private Vector2D getCourantPos()
-	{
-		return grid[iPosX][iPosY].getCourant();
 	}
 	
 	private String toStringCell()
@@ -137,8 +137,7 @@ public class Boat {
 				"Courant : " + c.getCourant().getX() + "\t" + c.getCourant().getY() + "\n" +
 				"Salinite : " + c.getSalinite() + "\n" +
 				"Profondeur : " + c.getProfondeur()+ "\n" +
-				c.getVent().toString();
-				
+				c.getVent().toString();	
 	}
 
 	public World getWorld() {

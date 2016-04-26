@@ -12,7 +12,7 @@ import ui.DepthDisplay;
 import ui.TravelDisplay;
 import ui.VaimosKeyEventDispatcher;
 
-public class Simulation {
+public class Simulation extends Thread {
 	
 	private World world;
 	private Boat boat;
@@ -20,10 +20,14 @@ public class Simulation {
 	private int delai;
 	private int value;
 	
-	Interpreter interpreter;
+	private Interpreter interpreter;
 	
-	BoatController bc;
-	File file;
+	private BoatController bc;
+	private File file;
+	
+	private TravelDisplay travelDisplay;
+	private DepthDisplay depthDisplay;
+	private KeyboardFocusManager manager;
 	
 	public Simulation(File file)
 	{
@@ -32,8 +36,14 @@ public class Simulation {
 		delai = 50;
 		value = 0;
 		
+		travelDisplay = new TravelDisplay(world);
+		depthDisplay = new DepthDisplay(boat);
+		manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+        manager.addKeyEventDispatcher(new VaimosKeyEventDispatcher(depthDisplay));
+		
 		bc = new SquareController(boat);
 		this.file = file;
+		
 	}
 	
 	public boolean setup()
@@ -54,14 +64,12 @@ public class Simulation {
         return true;
 	}
 	
-	public void launch()
+	public void run()
 	{
-		TravelDisplay travelDisplay = new TravelDisplay(world);
-		DepthDisplay depthDisplay = new DepthDisplay(boat);
 		
-		KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
-        manager.addKeyEventDispatcher(new VaimosKeyEventDispatcher(depthDisplay));
-        
+		travelDisplay.switchState();
+		depthDisplay.switchState();
+		
         /*try
         {
         	interpreter.run();

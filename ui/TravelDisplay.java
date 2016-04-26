@@ -7,12 +7,11 @@ import java.io.File;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import boat.Boat;
 import sim.World;
 
-public class TravelDisplay extends JPanel{
+public class TravelDisplay extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
@@ -20,8 +19,7 @@ public class TravelDisplay extends JPanel{
 	private int height;
 	private int length;
 	
-	private JFrame frame;
-	private boolean state = true;
+	private boolean state = false;
 	
 	private Image spriteRaw;
 	private Image spriteScan;
@@ -37,14 +35,12 @@ public class TravelDisplay extends JPanel{
 		height = world.getWorldHeight();
 		length = world.getWorldLength();
 		
-		frame = new JFrame();
-	    frame.setTitle("Projet VAIMOS");
-	    frame.setSize(height * spriteLength, length	* spriteLength);
-	    frame.add(this);
-	    frame.setVisible(state);
+	    setTitle("Travel");
+	    setSize(height * spriteLength, length	* spriteLength);
+	    setVisible(state);
 		setFocusable(true);
 	    boat = world.getBoat();
-	    loadSprites();	    
+	    loadSprites();
 	}
 	
 	public void loadSprites()
@@ -91,29 +87,27 @@ public class TravelDisplay extends JPanel{
 				if(world.getGrid()[i][j].getDecouvert())
 				{
 				g2.drawImage(spriteScan, spriteLength * i, spriteLength * j,
-						spriteLength, spriteLength, frame);
+						spriteLength, spriteLength, this);
 				}
 				else
 				{
 				g2.drawImage(spriteRaw, spriteLength * i, spriteLength
-						* j, spriteLength, spriteLength, frame);
+						* j, spriteLength, spriteLength, this);
 				}
 				if(world.getGrid()[i][j].getProfondeur()<=0)
 				{
 					g2.drawImage(spriteRock, spriteLength * i, spriteLength
-							* j, spriteLength, spriteLength, frame);
+							* j, spriteLength, spriteLength, this);
 				}
 			}
 		}
-		g2.drawImage(spriteBoat, (int) (spriteLength * boat.getFPosX()), (int) (spriteLength * boat.getFPosY()), spriteLength + 16, spriteLength + 16, frame);
-		g2.drawImage(spriteBoat, (int) (spriteLength * 20), (int) (spriteLength * 0), spriteLength + 16, spriteLength + 16, frame);
-		
+		g2.drawImage(spriteBoat, (int) (spriteLength * boat.getFPosX()), (int) (spriteLength * boat.getFPosY()), spriteLength + 16, spriteLength + 16, this);		
 	}
 	
 	public void switchState()
 	{
 		state = !state;
-		frame.setVisible(state);
+		setVisible(state);
 	}
 	
 	public void addNotify() {

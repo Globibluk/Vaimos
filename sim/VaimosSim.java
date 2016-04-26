@@ -10,12 +10,11 @@ public class VaimosSim {
 
 	public static void main(String[] args) throws IOException
 	{
-		
 		try 
 		{
 		      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} 
-		catch (Exception e) { }
+		catch (Exception e) {}
 
 		MenuVaimos menu = new MenuVaimos();
 	}

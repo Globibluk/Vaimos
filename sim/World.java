@@ -4,6 +4,7 @@ package sim;
 import boat.Boat;
 import tools.Vector2D;
 
+
 public class World {
 
 	private Cell[][] grid;
@@ -90,7 +91,7 @@ public class World {
 		}
 	}
 	
-	public static float getMaxWorldDepth() {
+	public float getMaxWorldDepth() {
 		return maxWorldDepth;
 	}
 
