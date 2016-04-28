@@ -1,24 +1,25 @@
 package boat;
 
+import tools.Vector2D;
+
 public class Sailboat {
 	
 	double x,y,theta,v,omega,phi,phiPoint; 									// state variables
     double beta, Jz, rg, rv, alphag, alphav, alphaf, alphatheta, l,m, Jx; 	//parameters
     double a,psi;  															//wind
     double fg,fv,gamma,deltav,deltag,deltavmax;  							//link variables
-    double eta;																//viscositÃ©
-    double hv; 																// hauteur de centre de poussÃ©e
+    double eta;																//viscosité
+    double hv; 																// hauteur de centre de poussée
 
     double ax,ay,bx,by; 													// point de l'axe a-b
     int q;
     
-    double dt = 1.0; 															// A changer
+    double dt = 1; 															// A changer
     
-    public Sailboat(int ax, int bx, int ay, int by)
+    public Sailboat(int x, int y)
     {
-    	
-    	x= 0.0; 
-    	y= 0.0;
+    	this.x = x;
+    	this.y = y;
     	theta = Math.PI/2;
     	v = 0.1;
     	omega = 0.0;
@@ -26,10 +27,10 @@ public class Sailboat {
     	phiPoint = 0;
         Jx = 3000.0;
         Jz = 10000.0; 														// moments d'inertie
-        beta= 0.1;
+        beta = 0.1;
         rg= 1;
         alphatheta= 6000;
-        m= 300.0;
+        m = 300.0;
         alphaf= 1.0;
         rv= 1.0;
         alphag= 2000.0;
@@ -38,7 +39,7 @@ public class Sailboat {
         a= 0.3;
         psi= -4;  															//vent
         hv = 1.00;  														//Roulis
-        this.ax= 50;															//line
+        this.ax= 50;														//line
         this.ay= 0;															//line
         this.bx= 50;														//line
         this.by= 100;    													//line
@@ -61,7 +62,7 @@ public class Sailboat {
     
     public void setUp()
     {
-    	double r=10;
+    	double r=0.5;
         double zeta=Math.PI/4;
         double e=((bx-ax)*(y-ay)-(x-ax)*(by-ay))/Math.hypot(ax-bx,ay-by);
         if (Math.abs(e)>r) q=0;  //The robot is now free from its closed-hauled mode
@@ -103,6 +104,14 @@ public class Sailboat {
     public double getY()
     {
     	return y;
+    }
+    
+    public void setWind(Vector2D vent)
+    {
+    	this.psi=vent.getRotation();
+    	System.out.println(psi);
+    	this.a=(Math.sqrt((vent.getX()*vent.getX())+(vent.getY()*vent.getY())));
+    	System.out.println(a);
     }
     
     public void setCoordinates(int ax, int ay, int bx, int by)

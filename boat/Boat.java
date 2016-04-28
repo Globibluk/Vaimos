@@ -11,7 +11,7 @@ public class Boat {
 	private double fPosX;
 	private double fPosY;
 	private World world;
-	private Cell[][] grid;									// Cellule dÃ©ja explorÃ©e
+	private Cell[][] grid;									// Cellule déja explorée
 	private int tempsM = 0;
 	private int tempsH = 0;
 	private int tempsJ = 0;
@@ -28,7 +28,7 @@ public class Boat {
 		world.setBoat(this);
 		grid = new Cell[world.getWorldHeight()][world.getWorldLength()];
 		
-		sailboat = new Sailboat(iPosX, iPosX, iPosY, iPosY);
+		sailboat = new Sailboat(iPosX, iPosY);
 	}
 	
 	public void calculate()
@@ -142,5 +142,10 @@ public class Boat {
 
 	public World getWorld() {
 		return world;
+	}
+	
+	public void setWind(Vector2D vent)
+	{
+		sailboat.setWind(vent);
 	}
 }
