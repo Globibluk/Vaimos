@@ -3,6 +3,7 @@ package interpreter;
 import java.util.ArrayList;
 
 import boat.Boat;
+import sim.Simulation;
 
 public class Interpreter extends Thread {
 	
@@ -367,4 +368,5 @@ public class Interpreter extends Thread {
 		}
 		return value;
 	}
+	
 }
