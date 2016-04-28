@@ -39,7 +39,7 @@ public class World {
 		{
 			for(int j=0;j<length;j++)
 			{
-				prof = worldHeight-i-(worldHeight/100*20);
+				prof = worldHeight-i-(worldHeight/100*10);
 				grid[i][j] = new Cell(vent, courant, prof);
 				/*if( i == 0 && j == 0)
 				{

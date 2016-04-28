@@ -4,11 +4,10 @@ import java.awt.KeyboardFocusManager;
 import java.io.File;
 
 import boat.Boat;
-import boat.BoatController;
-import boat.SquareController;
 import interpreter.Interpreter;
 import interpreter.Loader;
 import ui.DepthDisplay;
+import ui.Repainter;
 import ui.TravelDisplay;
 import ui.VaimosKeyEventDispatcher;
 
@@ -18,30 +17,33 @@ public class Simulation extends Thread {
 	private Boat boat;
 	
 	private int delai;
-	private int value;
 	
 	private Interpreter interpreter;
 	
-	private BoatController bc;
 	private File file;
 	
 	private TravelDisplay travelDisplay;
 	private DepthDisplay depthDisplay;
 	private KeyboardFocusManager manager;
 	
+	private Repainter repainter;
+	
 	public Simulation(File file)
 	{
 		world = new World(100, 100);
-		boat = new Boat(15, 15, world);
-		delai = 50;
-		value = 0;
+		boat = new Boat(85, 50, world);
+		//boat = new Boat(50, 50, world);
+		delai = 0;
 		
 		travelDisplay = new TravelDisplay(world);
 		depthDisplay = new DepthDisplay(boat);
 		manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         manager.addKeyEventDispatcher(new VaimosKeyEventDispatcher(depthDisplay));
+        
+        repainter = new Repainter();       
+        repainter.registerPanel(travelDisplay);
+        repainter.registerPanel(depthDisplay);
 		
-		bc = new SquareController(boat);
 		this.file = file;
 		
 	}
@@ -51,6 +53,7 @@ public class Simulation extends Thread {
         
         interpreter = new Interpreter();
         Loader loader = new Loader(interpreter);
+        interpreter.setBoat(boat);
         try
         {
         	loader.load(file);
@@ -69,21 +72,30 @@ public class Simulation extends Thread {
 		
 		travelDisplay.switchState();
 		depthDisplay.switchState();
-		
-        /*try
+		boat.setWind(world.getCellXY(0, 0).getVent());
+		try
         {
-        	interpreter.run();
+        	repainter.start();
+        }
+        catch (Exception e)
+        {
+        	System.out.println("UI error");
+        }
+		
+        try
+        {
+        	interpreter.start();
         }
         catch (Exception e)
         {
         	System.out.println("Runtime error");
-        }*/
-        		
-		while(value != 4)
+        }        
+        
+        while(true)
 		{			
-			value = bc.control(value);
+			
 			travelDisplay.repaint();
-			depthDisplay.repaint();				
+			depthDisplay.repaint();
 	
 			try {
 				Thread.sleep(delai);

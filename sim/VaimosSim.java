@@ -16,6 +16,7 @@ public class VaimosSim {
 		} 
 		catch (Exception e) {}
 
+		@SuppressWarnings("unused")
 		MenuVaimos menu = new MenuVaimos();
 	}
 }
