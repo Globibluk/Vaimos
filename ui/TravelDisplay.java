@@ -7,17 +7,20 @@ import java.io.File;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import boat.Boat;
 import sim.World;
 
-public class TravelDisplay extends JFrame {
+public class TravelDisplay extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
 	private World world;
 	private int height;
-	private int length;
+	private int width;
+	
+	private JFrame frame;
 	
 	private boolean state = false;
 	
@@ -25,7 +28,9 @@ public class TravelDisplay extends JFrame {
 	private Image spriteScan;
 	private Image spriteBoat;
 	private Image spriteRock;
-	private int spriteLength = 8;
+	
+	private int xSpriteLength = 8;
+	private int ySpriteLength = 8;
 	
 	private Boat boat;
 	
@@ -33,12 +38,16 @@ public class TravelDisplay extends JFrame {
 	{	
 		this.world = world;
 		height = world.getWorldHeight();
-		length = world.getWorldLength();
+		width = world.getWorldLength();
 		
-	    setTitle("Travel");
-	    setSize(height * spriteLength, length	* spriteLength);
-	    setVisible(state);
-		setFocusable(true);
+		frame = new JFrame();		
+	    frame.setTitle("Travel");
+	    frame.setSize(height * xSpriteLength, width * ySpriteLength);
+	    
+	    frame.add(this);
+	    
+	    frame.setFocusable(true);
+	    frame.setVisible(state);
 	    boat = world.getBoat();
 	    loadSprites();
 	}
@@ -80,39 +89,39 @@ public class TravelDisplay extends JFrame {
 	{
 		Graphics2D g2 = (Graphics2D) g;
 		
+		int tempHeight = frame.getHeight();
+		int tempWidth = frame.getWidth();
+		
+		xSpriteLength = tempWidth / width;
+		ySpriteLength = tempHeight / height;
+		
 		for(int i=0;i<height;i++)
 		{
-			for(int j=0;j<length;j++)
+			for(int j=0;j<width;j++)
 			{
 				if(world.getGrid()[i][j].getDecouvert())
 				{
-				g2.drawImage(spriteScan, spriteLength * i, spriteLength * j,
-						spriteLength, spriteLength, this);
+				g2.drawImage(spriteScan, xSpriteLength * i, ySpriteLength * j,
+						xSpriteLength, ySpriteLength, this);
 				}
 				else
 				{
-				g2.drawImage(spriteRaw, spriteLength * i, spriteLength
-						* j, spriteLength, spriteLength, this);
+				g2.drawImage(spriteRaw, xSpriteLength * i, ySpriteLength
+						* j, xSpriteLength, ySpriteLength, this);
 				}
 				if(world.getGrid()[i][j].getProfondeur()<=0)
 				{
-					g2.drawImage(spriteRock, spriteLength * i, spriteLength
-							* j, spriteLength, spriteLength, this);
+					g2.drawImage(spriteRock, xSpriteLength * i, ySpriteLength
+							* j, xSpriteLength, ySpriteLength, this);
 				}
 			}
 		}
-		g2.drawImage(spriteBoat, (int) (spriteLength * boat.getFPosX()), (int) (spriteLength * boat.getFPosY()), spriteLength + 16, spriteLength + 16, this);		
+		g2.drawImage(spriteBoat, xSpriteLength * (boat.getIPosX()-1), ySpriteLength * (boat.getIPosY()-1), xSpriteLength+16, ySpriteLength+16, this);		
 	}
 	
 	public void switchState()
 	{
 		state = !state;
-		setVisible(state);
-	}
-	
-	public void addNotify() {
-        super.addNotify();
-        requestFocus();
-    }
-	
+		frame.setVisible(state);
+	}	
 }

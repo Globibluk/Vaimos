@@ -13,10 +13,13 @@ public class DepthDisplay extends JPanel{
 	private static final long serialVersionUID = 1L;
 
 	private int height;
-	private int length;
+	private int width;
 	private Boat vaimos;
+	
 	private JFrame frame;
-	private int spriteLength = 8;
+	
+	private int xSpriteLength = 8;
+	private int ySpriteLength = 8;
 	
 	private boolean state = false;
 	
@@ -25,22 +28,30 @@ public class DepthDisplay extends JPanel{
 	{	
 		vaimos = vai;
 		height = vaimos.getWorld().getWorldHeight();
-		length = vaimos.getWorld().getWorldLength();
+		width = vaimos.getWorld().getWorldLength();
 		
 		frame = new JFrame();
-	    frame.setTitle("Projet VAIMOS");
-	    frame.setSize(height * spriteLength, length	* spriteLength);
+	    frame.setTitle("Depth");
+	    frame.setSize(height * xSpriteLength, width * ySpriteLength);
+	    
 	    frame.add(this);
+	    
+	    frame.setFocusable(true);
 	    frame.setVisible(state);
-		setFocusable(true);
+		
 	}
 
 	public void paint(Graphics g)
 	{
+		int tempHeight = frame.getHeight();
+		int tempWidth = frame.getWidth();
+		
+		xSpriteLength = tempWidth / width;
+		ySpriteLength = tempHeight / height;
 		
 		for(int i=0;i<height;i++)
 		{
-			for(int j=0;j<length;j++)
+			for(int j=0;j<width;j++)
 			{
 				if(vaimos.getGridXY(i, j) != null)
 				{
@@ -48,19 +59,21 @@ public class DepthDisplay extends JPanel{
 					if(prof==0)
 					{
 						g.setColor(new Color(0, 255, 0));
-						g.fillRect(i * spriteLength, j * spriteLength, spriteLength, spriteLength);
+						g.fillRect(i * xSpriteLength, j * ySpriteLength, xSpriteLength, ySpriteLength);
 					}
 					else
 					{
 						prof = (prof / vaimos.getWorld().getMaxWorldDepth()) * 255;
+						if(prof < 0) prof = 0;
+						if(prof > 255) prof = 255;
 						g.setColor(new Color((int)prof, 0,(int)(255 - prof)));
-						g.fillRect(i * spriteLength, j * spriteLength, spriteLength, spriteLength);
+						g.fillRect(i * xSpriteLength, j * ySpriteLength, xSpriteLength, ySpriteLength);
 					}
 				}
 				else
 				{
 					g.setColor(new Color(255, 255, 255));
-					g.fillRect(i * spriteLength, j * spriteLength, spriteLength, spriteLength);
+					g.fillRect(i * xSpriteLength, j * ySpriteLength, xSpriteLength, ySpriteLength);
 				}
 			}
 		}
@@ -71,11 +84,5 @@ public class DepthDisplay extends JPanel{
 	{
 		state = !state;
 		frame.setVisible(state);
-	}
-	
-	public void addNotify() {
-        super.addNotify();
-        requestFocus();
-    }
-	
+	}	
 }
