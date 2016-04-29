@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import boat.Boat;
 import sim.Simulation;
 import tools.Point;
+import ui.AverageDepthDisplay;
 
 public class Interpreter extends Thread {
 	
@@ -73,7 +74,7 @@ public class Interpreter extends Thread {
 		for(line=0;line<instructions.size();line++)
 		{
 			try {
-				Thread.sleep(delai);
+				Thread.sleep(0);
 			} catch (InterruptedException e) {}
 			i = instructions.get(line);
 			args = i.getArgs();
@@ -315,7 +316,7 @@ public class Interpreter extends Thread {
 					s += getData(i.getArgs().get(0));
 					if(i.getName() == "print") 
 						System.out.print(s);
-					else 
+					else
 						System.out.println(s);
 					break;
 					
@@ -356,6 +357,14 @@ public class Interpreter extends Thread {
 					delai = Integer.parseInt(i.getArgs().get(0));
 					break;
 				
+				case "averagedepht":
+					double xpas = (double) getData(args.get(0));
+					double ypas = (double) getData(args.get(1));
+					AverageDepthDisplay avedepdis = new AverageDepthDisplay(boat, xpas, ypas);
+					avedepdis.switchState();
+					avedepdis.repaint();
+					System.out.println("THE END");
+					break;
 				default:
 					throw new UnknownInstructionException(line);
 					
