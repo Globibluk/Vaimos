@@ -1,8 +1,104 @@
-list list
-add list 10
-get list 0 a
-print a
-set list 0 15
-get list 0 a
-print a
-setTarget 1 2 3 4
+comment 								INIT
+
+value prof 5
+value size 0
+posx x
+posy y
+plist bords
+
+padd bords 10 10
+padd bords 10 90
+padd bords 90 10
+padd bords 90 90
+
+value hauteur 80
+value largeur 80
+value resolution 20
+/ hpas hauteur resolution
+/ lpas largeur resolution
+
+plist cible
+
+pget bords 0 bmin
+pget bords 3 bmax
+px bmin xmin
+py bmin ymin
+px bmax xmax
+py bmax ymax
+
++ i xmin 0
+while i < xmax
++ j ymin 0
+while j < ymax
+padd cible i j
++ size size 1
++ j j lpas
+end
++ i i hpas
+end
+
+comment 								FININIT
+
+delay 0
+
+comment 								ALGO
+
+while 1 == 1
+pget cible 0 objo
+px objo objox
+py objo objoy
+
+print 1
+value try 0
+print 1
+while try != 1
+print 1
+print x
+print y
+print objox
+print objoy
+setTarget x y objox objoy
+calculate
+posx x
+posy y
+- myx x objox
+if myx <= 0
+* myx myx -1
+fi
+print objox
+print objoy
+- myy y objoy
+if myy <= 0
+* myy myy -1
+fi
+value try 0
+if myx < hpas
+if myy < lpas
+value try 1
+fi
+fi
+- realsize size 1
+for loop 1 realsize +
+pget cible loop ptmp
+print loop
+px ptmp xtmp
+py ptmp ytmp
+- myx x xtmp
+if myx <= 0
+* myx myx -1
+fi
+- myy y ytmp
+if myy <= 0
+* myy myy -1
+fi
+if myx < hpas
+if myy < lpas
+premove cible loop
+- size size 1
+fi
+fi
+end
+end
+premove cible 0
+- size size 1
+end
