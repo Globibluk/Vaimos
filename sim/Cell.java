@@ -43,7 +43,7 @@ public class Cell {
 		return courant;
 	}
 	
-	public float getProfondeur()
+	public double getProfondeur()
 	{
 		return profondeur;
 	}

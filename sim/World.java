@@ -102,10 +102,10 @@ public class World {
 		float addy =(float)( Math.random()*2 ) - 1;
 		float xtmp = grid[0][0].getVent().getX()+addx;
 		float ytmp = grid[0][0].getVent().getY()+addy;
-		if(xtmp > 50) xtmp = 50;
-		if(xtmp < -50) xtmp = -50;
-		if(ytmp > 50) ytmp = 50;
-		if(ytmp < -50) ytmp = -50;
+		if(xtmp > 25) xtmp = 25;
+		if(xtmp < -25) xtmp = -25;
+		if(ytmp > 25) ytmp = 25;
+		if(ytmp < -25) ytmp = -25;
 		newvent.setX(xtmp);
 		newvent.setY(ytmp);
 		ytmp *= ytmp;
