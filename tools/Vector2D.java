@@ -38,7 +38,7 @@ public class Vector2D {
 	
 	public String toString()
 	{
-		return getRotation() + "\n";
+		return "("+x+","+y+")";
 	}
 
 	public void setX(float x) {
