@@ -34,7 +34,7 @@ public class Boat {
 	public void calculate()
 	{
 		sailboat.update();
-		if(world.getCellXY(iPosX, iPosY).getProfondeur()!=0)
+		if(world.getCellXY(iPosX, iPosY).getProfondeur()>0)
 		{
 			move(sailboat.getX(), sailboat.getY());
 			analyseCell();
@@ -102,9 +102,10 @@ public class Boat {
 		
 	}
 	
-	public float getProfPos()
+	public double getProfPos()
 	{
-		return grid[iPosX][iPosY].getProfondeur();
+		Cell c = world.getCellXY(iPosX, iPosY);
+		return c.getProfondeur();
 	}
 	
 	public float getSalPos()
