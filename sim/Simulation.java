@@ -92,16 +92,7 @@ public class Simulation extends Thread {
         }        
         
         while(true)
-		{			
-			
-			travelDisplay.repaint();
-			depthDisplay.repaint();
-	
-			try {
-				Thread.sleep(delai);
-			} catch (InterruptedException e) {}
-			
-		}
+		{}
 	}
 
 }

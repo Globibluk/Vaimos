@@ -96,11 +96,16 @@ public class World {
 	}
 
 	public void changementVent(){
+		//System.out.println(grid[0][0].getVent().toString());
 		Vector2D newvent = new Vector2D();
 		float addx =(float)( Math.random()*2 ) - 1;
 		float addy =(float)( Math.random()*2 ) - 1;
 		float xtmp = grid[0][0].getVent().getX()+addx;
 		float ytmp = grid[0][0].getVent().getY()+addy;
+		if(xtmp > 50) xtmp = 50;
+		if(xtmp < -50) xtmp = -50;
+		if(ytmp > 50) ytmp = 50;
+		if(ytmp < -50) ytmp = -50;
 		newvent.setX(xtmp);
 		newvent.setY(ytmp);
 		ytmp *= ytmp;
