@@ -39,24 +39,23 @@ end
 
 comment 								FININIT
 
-delay 0
+
 
 comment 								ALGO
+depth prof
+value tourne 1
+value sol 0
+if 0 >= prof
+value tourne 0
+fi
 
-while 1 == 1
+delay 10
+while tourne == 1
 pget cible 0 objo
 px objo objox
 py objo objoy
-
-print 1
 value try 0
-print 1
 while try != 1
-print 1
-print x
-print y
-print objox
-print objoy
 setTarget x y objox objoy
 calculate
 posx x
@@ -65,8 +64,6 @@ posy y
 if myx <= 0
 * myx myx -1
 fi
-print objox
-print objoy
 - myy y objoy
 if myy <= 0
 * myy myy -1
@@ -77,10 +74,10 @@ if myy < lpas
 value try 1
 fi
 fi
-- realsize size 1
+- realsize size 2
+if realsize > 0
 for loop 1 realsize +
 pget cible loop ptmp
-print loop
 px ptmp xtmp
 py ptmp ytmp
 - myx x xtmp
@@ -94,11 +91,32 @@ fi
 if myx < hpas
 if myy < lpas
 premove cible loop
+- loop loop 1
 - size size 1
+- realsize realsize 1
+if realsize < 0
+value realsize 0
+fi
 fi
 fi
 end
+fi
+depth prof
+if prof <= 0
+value tourne 0
+value try 1
+fi
 end
 premove cible 0
 - size size 1
+value tourne 1
+depth prof
+if prof <= 0
+value tourne 0
+fi
+if size == 0
+value tourne 0
+fi
 end
+print 404
+averagedepht hpas lpas
