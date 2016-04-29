@@ -46,7 +46,7 @@ public class Sailboat {
         q=1;
     }
     
-    public void setLine(int ax, int bx, int ay, int by)
+    public void setLine(double ax, double bx, double ay, double by)
     {
     	this.ax = ax;
     	this.bx = bx;
@@ -109,16 +109,14 @@ public class Sailboat {
     public void setWind(Vector2D vent)
     {
     	this.psi=vent.getRotation();
-    	System.out.println(psi);
     	this.a=(Math.sqrt((vent.getX()*vent.getX())+(vent.getY()*vent.getY())));
-    	System.out.println(a);
     }
     
-    public void setCoordinates(int ax, int ay, int bx, int by)
+    public void setCoordinates(double ax2, double ay2, double bx2, double by2)
     {
-    	this.ax = ax;
-    	this.ay = ay;
-    	this.bx = bx;
-    	this.by = by;
+    	this.ax = ax2;
+    	this.ay = ay2;
+    	this.bx = bx2;
+    	this.by = by2;
     }
 }

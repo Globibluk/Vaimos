@@ -54,7 +54,7 @@ public class Boat {
 		iPosY = Math.round((float)fPosY);
 	}
 	
-	public void setTarget(int ax, int ay, int bx, int by)
+	public void setTarget(double ax, double ay, double bx, double by)
 	{
 		sailboat.setCoordinates(ax, ay, bx, by);
 	}
@@ -66,6 +66,7 @@ public class Boat {
 		{
 			tempsM = 0;
 			tempsH++;
+			world.changementVent();
 		}
 		if(tempsH == 24)
 		{
@@ -124,7 +125,7 @@ public class Boat {
 	private void analyseCell()
 	{
 		grid[iPosX][iPosY] = world.getCellXY(iPosX, iPosY);
-		System.out.println(toStringCell());
+		//System.out.println(toStringCell());
 		world.getCellXY(iPosX, iPosY).setDecouvert();
 	}
 	
