@@ -19,6 +19,7 @@ public class MenuVaimos extends JFrame implements ActionListener {
 	private JPanel panel;
 	private JButton selectButton, runButton, loadButton;
 	private JFileChooser fc;
+	private JTextArea taf;
 	
 	private File file;
 		
@@ -28,6 +29,8 @@ public class MenuVaimos extends JFrame implements ActionListener {
 	public MenuVaimos()
 	{
 		setTitle("VAIMOS");
+		taf = new JTextArea(1, 10);
+		taf.setEditable(false);
 		panelSetup();
 		add(panel);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -41,10 +44,10 @@ public class MenuVaimos extends JFrame implements ActionListener {
 		panel.setBounds(100, 100, 500, 500);
 		JTextArea ta = new JTextArea();
 		ta.setText("Welcome to Vaimos simulation.\nPlease select a program file.");
+		ta.setEditable(false);
 		panel.add(ta);
-		JTextField tf = new JTextField(10);
-		tf.setText("Prog");
-		panel.add(tf);
+		taf.setText("");
+		panel.add(taf);
 		selectButton = new JButton("Select File");
 		selectButton.addActionListener(this);
 		panel.add(selectButton);
@@ -69,6 +72,8 @@ public class MenuVaimos extends JFrame implements ActionListener {
             if (returnVal == JFileChooser.APPROVE_OPTION) 
             {
                 file = fc.getSelectedFile();
+                taf.setText(file.getName());
+                
 	        }
 		}
 		if(source == loadButton && file != null)
