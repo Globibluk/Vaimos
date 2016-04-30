@@ -20,7 +20,7 @@ public class Sailboat {
     {
     	this.x = x;
     	this.y = y;
-    	theta = Math.PI/2;
+    	theta = 2*Math.PI/3;
     	v = 0.1;
     	omega = 0.0;
     	phi = 0;
@@ -109,7 +109,10 @@ public class Sailboat {
     public void setWind(Vector2D vent)
     {
     	this.psi=vent.getRotation();
-    	this.a=(Math.sqrt((vent.getX()*vent.getX())+(vent.getY()*vent.getY())));
+    	this.a = ((Math.sqrt((vent.getX()*vent.getX())+(vent.getY()*vent.getY()))));
+    	a=0.004;
+    	System.out.println("("+vent.getX()+","+vent.getY()+")\t\t"+"("+a+","+psi+")");
+    //	a = 0.4;
     }
     
     public void setCoordinates(double ax2, double ay2, double bx2, double by2)

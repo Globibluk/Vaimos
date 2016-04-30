@@ -61,17 +61,18 @@ public class Boat {
 	
 	private void time()
 	{
-		tempsM += 10;
+		tempsM += 1;
 		if(tempsM == 60)
 		{
 			tempsM = 0;
 			tempsH++;
-			world.changementVent();
 		}
 		if(tempsH == 24)
 		{
 			tempsH = 0;
 			tempsJ++;
+			world.changementVent();
+			sailboat.setWind(world.getCellXY(iPosX, iPosY).getVent());
 		}
 	}
 	
@@ -126,10 +127,10 @@ public class Boat {
 	private void analyseCell()
 	{
 		grid[iPosX][iPosY] = world.getCellXY(iPosX, iPosY);
-		//System.out.println(toStringCell());
 		world.getCellXY(iPosX, iPosY).setDecouvert();
 	}
 	
+	@SuppressWarnings("unused")
 	private String toStringCell()
 	{
 		Cell c = grid[iPosX][iPosY];
