@@ -16,8 +16,6 @@ public class Simulation extends Thread {
 	private World world;
 	private Boat boat;
 	
-	private int delai;
-	
 	private Interpreter interpreter;
 	
 	private File file;
@@ -30,10 +28,8 @@ public class Simulation extends Thread {
 	
 	public Simulation(File file)
 	{
-		world = new World(100, 100);
-		boat = new Boat(85, 50, world);
-		//boat = new Boat(50, 50, world);
-		delai = 0;
+		world = new World(500, 500);
+		boat = new Boat(430, 250, world);
 		
 		travelDisplay = new TravelDisplay(world);
 		depthDisplay = new DepthDisplay(boat);
@@ -71,7 +67,6 @@ public class Simulation extends Thread {
 	{
 		
 		travelDisplay.switchState();
-		depthDisplay.switchState();
 		boat.setWind(world.getCellXY(0, 0).getVent());
 		try
         {

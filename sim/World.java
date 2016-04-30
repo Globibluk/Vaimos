@@ -29,10 +29,15 @@ public class World {
 		float prof = 0;
 		Vector2D vent = new Vector2D();
 		Vector2D courant = new Vector2D();
-		float xtmp = vent.getX();
-		xtmp *= xtmp;
-		float ytmp = vent.getY();
-		ytmp *= ytmp;
+		float xtmp = (float)( Math.random()*1 ) - (float)0.5;
+		if(xtmp > 1) xtmp = 1;
+		if(xtmp < -1) xtmp = -1;
+		float ytmp = (float) Math.sqrt(1 - (xtmp * xtmp));
+		if(Math.random() < 0.5) ytmp = -ytmp;
+		xtmp=(float)-0.7;
+		ytmp=(float)-0.7;
+		vent.setX(xtmp);
+		vent.setY(ytmp);
 		courant.setX(xtmp);
 		courant.setY(ytmp);
 		for(int i=0;i<height;i++)
@@ -41,52 +46,6 @@ public class World {
 			{
 				prof = worldHeight-i-(worldHeight/100*10);
 				grid[i][j] = new Cell(vent, courant, prof);
-				/*if( i == 0 && j == 0)
-				{
-					grid[i][j] = new Cell();
-					grid[i][j].setVent(vent);
-					grid[i][j].setCourant(courant);
-				}
-				else
-				{
-					vari = (float) (Math.random() * 20) - 10;
-					if(i == 0)
-					{
-						moyprof = grid[i][j-1].getProfondeur();
-						vari = (moyprof * vari)/100;
-						prof = moyprof + vari;
-					}
-					if(j == 0)
-					{
-						moyprof = (grid[i-1][j].getProfondeur() + grid[i-1][j+1].getProfondeur())/2;
-						vari = (moyprof * vari)/100;
-						prof = moyprof + vari;
-					}
-					if(j != 0 && i != 0 && j < length-1)
-					{
-						moyprof = (grid[i][j-1].getProfondeur() + grid[i-1][j-1].getProfondeur() + grid[i-1][j].getProfondeur() + grid[i-1][j+1].getProfondeur())/4;
-						vari = (moyprof * vari)/100;
-						prof = moyprof + vari;
-					}
-					if(j == length-1 && i != 0)
-					{
-						moyprof = (grid[i][j-1].getProfondeur() + grid[i-1][j-1].getProfondeur() + grid[i-1][j].getProfondeur())/3;
-						vari = (moyprof * vari)/100;
-						prof = moyprof + vari;
-					}
-					if(i > worldHeight-20)
-					{
-						prof = worldHeight-i;
-					}
-					if(i > worldHeight-10)
-					{
-						prof = -111;
-					}
-					if(prof < 0) prof = 0;
-					if(prof >= 1000) prof = 999;
-					
-					grid[i][j] = new Cell(vent, courant, prof);
-				}*/
 			}
 		}
 	}
@@ -96,16 +55,13 @@ public class World {
 	}
 
 	public void changementVent(){
-		//System.out.println(grid[0][0].getVent().toString());
 		Vector2D newvent = new Vector2D();
-		float addx =(float)( Math.random()*2 ) - 1;
-		float addy =(float)( Math.random()*2 ) - 1;
+		float addx =(float)( Math.random()*1 ) - (float)0.5;
 		float xtmp = grid[0][0].getVent().getX()+addx;
-		float ytmp = grid[0][0].getVent().getY()+addy;
-		if(xtmp > 25) xtmp = 25;
-		if(xtmp < -25) xtmp = -25;
-		if(ytmp > 25) ytmp = 25;
-		if(ytmp < -25) ytmp = -25;
+		if(xtmp > 1) xtmp = 1;
+		if(xtmp < -0.12) xtmp = (float)0.12;
+		float ytmp = (float) Math.sqrt(1 - (xtmp * xtmp));
+		if(Math.random() < 0.5) ytmp = -ytmp;
 		newvent.setX(xtmp);
 		newvent.setY(ytmp);
 		ytmp *= ytmp;
