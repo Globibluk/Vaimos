@@ -3,7 +3,6 @@ package interpreter;
 import java.util.ArrayList;
 
 import boat.Boat;
-import sim.Simulation;
 import tools.Point;
 import ui.AverageDepthDisplay;
 
@@ -74,7 +73,7 @@ public class Interpreter extends Thread {
 		for(line=0;line<instructions.size();line++)
 		{
 			try {
-				Thread.sleep(0);
+				Thread.sleep(delai);
 			} catch (InterruptedException e) {}
 			i = instructions.get(line);
 			args = i.getArgs();
@@ -355,6 +354,13 @@ public class Interpreter extends Thread {
 				
 				case "delay":
 					delai = Integer.parseInt(i.getArgs().get(0));
+					break;
+				
+				case "wait":
+					int wait = Integer.parseInt(i.getArgs().get(0));
+					try {
+						Thread.sleep(wait);
+					} catch (InterruptedException e) {}
 					break;
 				
 				case "averagedepht":
